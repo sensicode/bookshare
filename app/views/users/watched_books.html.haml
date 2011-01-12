@@ -8,12 +8,11 @@
     %tr
       %th
       %th
-      %th
       %th Offered by
+      %th
     - for watching in @watchings
       - book = watching.book
       %tr
-        %td= link_to 'Unwatch', watching_path(watching), :method => :delete
         %td= link_to (image_tag book.title.image_url, :height => 80), book.title
         %td
           %span.book_list_title
@@ -28,5 +27,7 @@
           = link_to image_tag(book.user.gravatar_image_url(60)), :controller => :members, :action => :show, :login => book.user.login
           %br
           = link_to book.user.login, :controller => :members, :action => :show, :login => book.user.login
+        %td= link_to 'Unwatch', watching_path(watching), :method => :delete
+
 - else
   %p You're not watching any books.
