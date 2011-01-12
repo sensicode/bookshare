@@ -4,7 +4,7 @@ class WatchingsController < ApplicationController
   # POST /watchings
   # POST /watchings.xml
   def create
-    @watching = Watching.create(:book_id => params[:book_id], :user_id => current_user)
+    @watching = Watching.create(:book_id => params[:book_id], :user => current_user)
     redirect_to title_path(@watching.book.title)
   end
   
