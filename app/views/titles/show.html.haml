@@ -1,0 +1,73 @@
+%p#notice
+  = notice
+
+%span{:style => "float: left;"}
+  = image_tag @title.image_url, :height => 80
+
+%div{:style => "margin-left: 130px;"}
+  %h1
+    = @title.title
+  %p
+    = @title.subtitle
+  %p
+    - for author in @title.authors
+      %br
+      = link_to author.name, author_path(author)
+
+  -# Google Book Search data contains HTML entities so use raw() to preserve them
+  %div= raw @title.description
+  
+  - unless @title.subject.nil?  
+    %p
+      = link_to @title.subject.name, subject_path(@title.subject)
+  
+  %p
+    ISBN-13:
+    %a{ :href => "http://isbn.nu/" + @title.isbn13 }
+      = @title.isbn13
+
+  - if @title.books.count > 0 
+    %h2{:style => "margin-top: 60px;"} You can borrow this book from:
+  
+    %table    
+      - for book in @title.books
+        %tr
+          %td= link_to (image_tag book.user.gravatar_image_url(50)), :controller => :members, :action => :show, :login => book.user.login
+          %td= link_to book.user.login, :controller => :members, :action => :show, :login => book.user.login
+          %td
+            = pluralize(book.user.books.count, "book")
+            offered
+            %br
+            Member for
+            = time_ago_in_words(book.user.created_at)
+            %td
+              - if current_user
+
+                - if current_user.owns?(book)
+                  You own this book
+                  
+                - elsif current_user.watched?(book)
+                  Watched
+                  
+                - else
+                  = form_for @watching do |f|
+                    = hidden_field_tag :book_id, book.id
+                    = f.submit "Watch Book"
+
+              - else
+                &nbsp;
+            %td
+              - if book.status == StaticData::BOOK_STATUS['AVAILABLE']
+                = link_to "Request Book", new_loan_path(book)
+              - elsif book.status == StaticData::BOOK_STATUS['ONLOAN']
+                due
+                = nice_date(book.loans.last.due)
+              - else
+                = book.status_text
+  - else               
+    %p No member is currently offering this book.
+
+-#
+  = link_to 'Edit', edit_book_path(@book)
+  |
+  = link_to 'Back', books_path

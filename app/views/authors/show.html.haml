@@ -1,0 +1,19 @@
+%h1
+  = @author.name
+
+- if @author.titles.count > 0  
+  %p
+    = pluralize(@author.titles.count, "book")
+    by this author:
+
+  %table    
+    - for title in @author.titles
+      %tr
+        %td= link_to(image_tag(title.image_url), title_path(title))
+        %td
+          %span.book_list_title
+            = link_to title.title, title_path(title)
+          - unless title.subtitle.nil?
+            %br
+            = title.subtitle
+            

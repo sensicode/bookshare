@@ -1,0 +1,14 @@
+#puffbox
+  Lend and borrow books with your neighbours in Sutton
+
+- if @books.count > 0
+  %table
+    %tr
+    - i = 0
+    - for book in @books
+      - title = book.title
+      - i += 1
+      %td
+        = link_to (image_tag title.image_url, :height => 80, :alt => "#{title.title} by #{title.authors.first.name}"), title
+      - if i % 10 == 0
+        %tr

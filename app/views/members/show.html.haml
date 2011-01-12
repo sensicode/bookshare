@@ -1,0 +1,8 @@
+%h1= @user.login
+
+= image_tag @user.gravatar_image_url(80)
+= @user.email
+
+  
+%p
+  = pluralize(@user.books.count, "book")
