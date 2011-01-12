@@ -1,5 +1,3 @@
-require "Time"
-
 module ApplicationHelper
   def nice_date(date)
     date.strftime("%a %d %b %Y")
