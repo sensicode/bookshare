@@ -35,6 +35,10 @@ class User < ActiveRecord::Base
     "http://www.gravatar.com/avatar/" + Digest::MD5.hexdigest(self.email.strip.downcase) + "?d=identicon&s=" + size.to_s
   end
   
+  def name
+    "#{self.first_name} #{self.last_name}"
+  end
+  
   def owns?(book)
     self.books.include?(book)
   end
