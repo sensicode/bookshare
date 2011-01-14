@@ -1,0 +1,16 @@
+!!!5
+%html
+  %head
+    %title Sutton Bookshare
+    = stylesheet_link_tag :all
+    :css
+      font-family: Helvetica, Arial, sans-serif;
+      
+
+  %body
+  
+    %h1
+      = link_to(image_tag('logo.png'), :controller => 'pages', :action => 'home')
+      Sutton Bookshare
+    
+    = yield

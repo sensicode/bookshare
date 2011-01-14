@@ -1,5 +1,24 @@
 %p
-  This is a member message from
-  = @sender.email
+  = image_tag @sender.gravatar_image_url
+  
+%p
+  This is a message from
+  = link_to @sender.login, url_for( :controller => :members, :action => :show, :login => @sender.login, :only_path => false )
+  at Sutton Bookshare.
+  
+%p
+  Reply to
   = @sender.login
-  = @sender.name
+  in the usual way by clicking
+  %strong
+    Reply 
+  in your email program.
+  
+%p
+  This is not an official email from Sutton Council staff.
+  
+%hr
+
+= @message
+  
+  
