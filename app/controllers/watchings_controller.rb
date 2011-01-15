@@ -5,7 +5,7 @@ class WatchingsController < ApplicationController
   # POST /watchings.xml
   def create
     @watching = Watching.create(:book_id => params[:book_id], :user => current_user)
-    redirect_to title_path(@watching.book.title)
+    redirect_to title_path(@watching.book.title), :notice => "Watched book OK"
   end
   
   # DELETE /watchings/1
@@ -15,7 +15,7 @@ class WatchingsController < ApplicationController
     @watching.destroy
 
     respond_to do |format|
-      format.html { redirect_to(:watchlist) }
+      format.html { redirect_to(:watchlist, :notice => "Unwatched book OK") }
       format.xml  { head :ok }
     end
   end
