@@ -2,6 +2,43 @@
 
 = image_tag @user.gravatar_image_url(80)
 
-= link_to "Send a message to #{@user.login}", :controller => :messages, :action => :new, :recipient => @user.login
+%p
+  = link_to "Send a message to #{@user.login}", :controller => :messages, :action => :new, :recipient => @user.login
 
-%p= pluralize(@user.books.count, "book")
+.scorecard
+  %table
+    %tr
+      %td
+        Member since
+        = @user.created_at.strftime("%B %Y")
+    %tr
+      %td
+        = pluralize(@user.books.count, "book")
+        listed
+    %tr
+      %td
+        = pluralize(@user.borrowings.count, "book")
+        borrowed
+    %tr
+      %td
+        = pluralize(@user.loans.count, "book")
+        lent
+    %tr
+      %td
+        = (pluralize(@user.active_borrowings.count, "book"))
+        currently borrowed from others
+        - if @very_overdue_count > 0
+          (
+          = @very_overdue_count
+          more than one week overdue)
+    %tr
+      %td
+        = (pluralize(@user.active_loans.count, "book"))
+        currently lent to others
+-#
+  %table        
+  - for book in @user.books
+    - title = book.title
+      %tr
+        %td
+          = title.title
