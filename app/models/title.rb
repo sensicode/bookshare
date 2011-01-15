@@ -2,11 +2,7 @@ class Title < ActiveRecord::Base
   belongs_to :subject
   has_and_belongs_to_many :authors
   has_many :books
-  
-  def full_title
     
-  end
-  
 #   def to_param
 #     isbn13
 #   end
@@ -36,8 +32,6 @@ class Title < ActiveRecord::Base
     
     start_uri = 'http://books.google.com/books/feeds/volumes?q=' + isbn13
     doc = Nokogiri::XML(open(start_uri))
-    
-    Rails.logger.info 'Just done Google Books API lookup'
     
     t = Title.new
     
@@ -80,6 +74,5 @@ class Title < ActiveRecord::Base
     t.save
 
     return t
-
   end
 end
