@@ -7,6 +7,14 @@ class Title < ActiveRecord::Base
     
   end
   
+#   def to_param
+#     isbn13
+#   end
+#   
+#   def self.find(isbn13)
+#     self.find_by_isbn13(isbn13)
+#   end
+  
   def self.find_or_create_by_isbn13(isbn13)
     
     isbn13.strip!
