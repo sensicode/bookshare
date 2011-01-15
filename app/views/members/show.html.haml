@@ -2,6 +2,13 @@
 
 = image_tag @user.gravatar_image_url(80)
 
+- if current_user == @user
+  .help
+    Update your picture here by creating a
+    %a{ :href => 'http://www.gravatar.com/' }<
+      Gravatar
+    using the email address you use for Sutton Bookshare.
+
 %p
   = link_to "Send a message to #{@user.login}", :controller => :messages, :action => :new, :recipient => @user.login
 
@@ -35,16 +42,24 @@
       %td
         = (pluralize(@user.active_loans.count, "book"))
         currently lent to others
-%table        
-  - for book in @user.books
-    %tr
-      %td
-        = link_to image_tag(book.title.image_url), title_path(book.title)
-      %td
-        %span.book_list_title
-          = link_to book.title.title, title_path(book.title)
-        %br
-          = book.title.subtitle
-        %br
-        %br
-          = link_to book.title.authors.first.name, author_path (book.title.authors.first)
+
+%h2 Books
+
+- if @user.books.count > 0
+  %table        
+    - for book in @user.books
+      %tr
+        %td
+          = link_to image_tag(book.title.image_url), title_path(book.title)
+        %td
+          %span.book_list_title
+            = link_to book.title.title, title_path(book.title)
+          %br
+            = book.title.subtitle
+          %br
+          %br
+            = link_to book.title.authors.first.name, author_path (book.title.authors.first)
+- else
+  %p
+    = @user.login
+    doesn't have any books to lend right now.
