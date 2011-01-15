@@ -62,7 +62,7 @@
               - else
                 &nbsp;
             %td
-              - if ! current_user.owns?(book) && (book.status == StaticData::BOOK_STATUS['AVAILABLE'] || book.status == StaticData::BOOK_STATUS['ONLOAN'])
+              - if current_user && ! current_user.owns?(book) && (book.status == StaticData::BOOK_STATUS['AVAILABLE'] || book.status == StaticData::BOOK_STATUS['ONLOAN'])
                 = link_to "Request Book", :controller => :messages, :action => :request_new, :book => book, :recipient => book.user.login
 
   - else               
