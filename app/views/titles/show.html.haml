@@ -41,6 +41,14 @@
             Member for
             = time_ago_in_words(book.user.created_at)
             %td
+              - if book.status == StaticData::BOOK_STATUS['AVAILABLE']
+                available
+              - elsif book.status == StaticData::BOOK_STATUS['ONLOAN']
+                due on
+                = nice_date(book.loans.last.due)
+              - else
+                = book.status_text
+            %td
               - if current_user
 
                 - if current_user.owns?(book)
@@ -57,13 +65,9 @@
               - else
                 &nbsp;
             %td
-              - if book.status == StaticData::BOOK_STATUS['AVAILABLE']
-                = link_to "Request Book", new_loan_path(book)
-              - elsif book.status == StaticData::BOOK_STATUS['ONLOAN']
-                due
-                = nice_date(book.loans.last.due)
-              - else
-                = book.status_text
+              - if book.status == StaticData::BOOK_STATUS['AVAILABLE'] || book.status == StaticData::BOOK_STATUS['ONLOAN']
+                = link_to "Request Book", :controller => :messages, :action => :request_new, :book => book, :recipient => book.user.login
+
   - else               
     %p No member is currently offering this book.
 

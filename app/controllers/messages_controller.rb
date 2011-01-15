@@ -22,4 +22,28 @@ class MessagesController < ApplicationController
     end
   end
 
+  def request_new
+    @recipient = User.find_by_login(params[:recipient])
+    @book = Book.find(params[:book])
+  end
+  
+  def request_create
+    @to = User.find_by_login(params[:recipient])
+    @from = current_user
+    @book = Book.find(params[:book])
+    @message = params[:message].strip
+    
+    if @message.length > 0
+      email = MemberMessage.book_request(@from, @to, @book, @message)
+      if email.deliver
+        redirect_to :back, :notice => "Request sent to #{@to.login} OK"
+      else
+        redirect_to :back, :alert => "Failed to send request" 
+      end
+    else
+      redirect_to :back, :alert => "No message to send" 
+    end
+  end
+
+
 end

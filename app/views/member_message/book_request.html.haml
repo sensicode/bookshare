@@ -1,10 +1,30 @@
 %p
   = link_to image_tag(@sender.gravatar_image_url(80), :alt => @sender.login), url_for( :controller => :members, :action => :show, :login => @sender.login, :only_path => false )
+
+%p
+  = image_tag(@book.title.image_url)
   
 %p
-  This is a message from
   = link_to @sender.login, url_for( :controller => :members, :action => :show, :login => @sender.login, :only_path => false )
-  at Sutton Bookshare.
+  at Sutton Bookshare would like to borrow
+  = link_to @book.title.title, title_url(@book.title)
+  by
+  = link_to @book.title.authors.first.name, author_url(@book.title.authors.first)
+
+%p
+  This book
+  - if @book.status == StaticData::BOOK_STATUS['AVAILABLE']
+    is currently available.
+  - elsif @book.status == StaticData::BOOK_STATUS['ONLOAN']
+    is due on
+    = nice_date(@book.loans.last.due)
+    \.
+  - else
+    is
+    = @book.status_text
+    \.
+  
+
   
 %p
   Reply to
