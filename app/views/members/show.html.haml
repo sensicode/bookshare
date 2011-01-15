@@ -4,10 +4,13 @@
 
 - if current_user == @user
   .help
-    Update your picture here by creating a
+    Add or update your picture here by with
     %a{ :href => 'http://www.gravatar.com/' }<
       Gravatar
-    using the email address you use for Sutton Bookshare.
+    using your email address
+    %strong
+      = current_user.email
+    
 
 %p
   = link_to "Send a message to #{@user.login}", :controller => :messages, :action => :new, :recipient => @user.login
