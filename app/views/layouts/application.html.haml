@@ -42,7 +42,7 @@
         = image_tag current_user.gravatar_image_url(25)
         Logged in as
         %strong
-          = current_user.login
+          = link_to current_user.login, :controller => :members, :action => :show, :login => current_user.login
         |
         = link_to_unless_current "My Books (#{current_user.books.count.to_s})", books_path, :accesskey => '2'
         |
