@@ -5,7 +5,9 @@ class Book < ActiveRecord::Base
   has_many :watchings  
   has_many :watchers, :through => :watchings, :source => :user
   
-  has_many :loans  
+  has_many :loans
+  
+  validates_associated :title
 
   def status_text
     statuses = [

@@ -2,14 +2,10 @@ class Title < ActiveRecord::Base
   belongs_to :subject
   has_and_belongs_to_many :authors
   has_many :books
-    
-#   def to_param
-#     isbn13
-#   end
-#   
-#   def self.find(isbn13)
-#     self.find_by_isbn13(isbn13)
-#   end
+  
+  validates_associated :authors
+  validates_associated :subject
+  validates_isbn :isbn13, :with => :isbn13
   
   def self.find_or_create_by_isbn13(isbn13)
     

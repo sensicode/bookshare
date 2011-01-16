@@ -45,23 +45,27 @@ class BooksController < ApplicationController
   # POST /books.xml
   def create
     begin
-      @title = Title.find_or_create_by_isbn13(params[:isbn13])
-
-      @book = Book.create(
-        :title => @title,
-        :user => current_user,
-        :status => StaticData::BOOK_STATUS['AVAILABLE']
-      )
+      if @title = Title.find_or_create_by_isbn13(params[:isbn13])
   
-      respond_to do |format|
-        if ! @book.nil?
-          format.html { redirect_to(books_path, :notice => 'Book was added OK') }
-          format.xml  { render :xml => @book, :status => :created, :location => @book }
-        else
-          format.html { render :action => "new" }
-          format.xml  { render :xml => @book.errors, :status => :unprocessable_entity }
+        @book = Book.create(
+          :title => @title,
+          :user => current_user,
+          :status => StaticData::BOOK_STATUS['AVAILABLE']
+        )
+    
+        respond_to do |format|
+          if ! @book.nil?
+            format.html { redirect_to(books_path, :notice => 'Book was added OK') }
+            format.xml  { render :xml => @book, :status => :created, :location => @book }
+          else
+            format.html { render :action => "new" }
+            format.xml  { render :xml => @book.errors, :status => :unprocessable_entity }
+          end
         end
-      end
+    else
+      flash[:alert] = "Invalid ISBN."
+      redirect_to :books
+    end
 
     rescue
       flash[:alert] = "Book not found. Sorry, you can't add this book at the moment. We're working to recognise more books."
