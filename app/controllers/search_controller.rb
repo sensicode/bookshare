@@ -7,8 +7,8 @@ class SearchController < ApplicationController
       @titles = Title.find_by_sql(["
         SELECT *
         FROM titles
-        WHERE TEXTCAT(TEXTCAT(title, ' '), subtitle) LIKE('%?%', @q)
-      "])
+        WHERE TEXTCAT(TEXTCAT(title, ' '), subtitle) LIKE('%?%')", @q
+      ])
 #     elsif @type == 'authors'
 #       @titles = Author.find_by_sql("
 #         SELECT t.*
