@@ -1,5 +1,4 @@
 class MemberMessage < ActionMailer::Base
-  default :from => "adrian.short@gmail.com"
   
   def member_message(sender, recipient, message)
     @message = message
