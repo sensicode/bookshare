@@ -1,6 +1,13 @@
 #puffbox
-  Lend and borrow books with your neighbours in Sutton
+  %p{ :style => 'font-size: 200%' }
+    Lend and borrow books with your neighbours in Sutton
 
+  %p{ :style => 'float: right' }
+    = link_to "Sign up now", :register, :class => "button"
+    
+  %p
+    Sutton Bookshare will help you lend and borrow books. It's free, easy to use and open to anyone who lives or works in the London Borough of Sutton.
+  
 - if @books.count > 0
   %table
     %tr
