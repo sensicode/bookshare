@@ -5,6 +5,12 @@ class LoansController < ApplicationController
   def new
     @loan = Loan.new
     @loan.book = current_user.books.find(params[:book_id])
+  
+    if params[:borrower_login]
+      @borrower_login = params[:borrower_login]
+    else
+      @borrower_login = ''
+    end
   end
   
   # POST /loans

@@ -35,6 +35,13 @@
   in your email program.
   
 %p
+  When you've given your book to 
+  %strong
+    = @sender.login
+  click this link to check it out:
+  = link_to "Lend a Book", url_for( :controller => :loans, :action => :new, :borrower_login => @sender.login, :book_id => @book.id)
+  
+%p
   This is not an official email from Sutton Council staff.
   
 %hr
