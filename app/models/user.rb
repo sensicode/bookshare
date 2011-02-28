@@ -29,7 +29,11 @@ class User < ActiveRecord::Base
             
   validates_presence_of :first_name, :last_name, :address1, :city, :postcode
   
-  acts_as_authentic
+  # http://littleshardsofruby.posterous.com/changing-authlogics-login-field
+  acts_as_authentic do |c|
+    c.validates_format_of_login_field_options = {:with => /^[a-zA-Z0-9]+$/, :message => I18n.t('error_messages.login_invalid', :default => "should use only letters and numbers")}   
+    c.validates_length_of_login_field_options = {:within => 5..20} 
+  end
   
   def gravatar_image_url(size = 40)
     "http://www.gravatar.com/avatar/" + Digest::MD5.hexdigest(self.email.strip.downcase) + "?d=identicon&s=" + size.to_s
