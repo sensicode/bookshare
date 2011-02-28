@@ -1,6 +1,7 @@
 class SearchController < ApplicationController
   def index
     @q = params[:q].strip.downcase
+    Search.create(:query => @q)
 #     @type = params[:type]
 #     if @type == 'titles'
       # sqlite uses || operator to concat strings, postgres uses TEXTCAT
