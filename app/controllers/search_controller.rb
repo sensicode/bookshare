@@ -10,7 +10,7 @@ class SearchController < ApplicationController
         FROM titles
         WHERE LOWER(TEXTCAT(TEXTCAT(title, ' '), subtitle)) LIKE(?)", "%#{@q}%"
       ])
-      Search.create(:query => @q, :results => @titles.count)
+      Search.create(:query => @q, :results => @titles.count || 0)
 
 #     elsif @type == 'authors'
 #       @titles = Author.find_by_sql("
