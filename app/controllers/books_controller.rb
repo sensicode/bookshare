@@ -91,14 +91,18 @@ class BooksController < ApplicationController
 
   # DELETE /books/1
   # DELETE /books/1.xml
-  # Don't let users delete books that are out on loan
   def destroy
     @book = current_user.books.find(params[:id])
-    @book.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(books_url, :notice => "Book deleted OK") }
-      format.xml  { head :ok }
+    if @book.available?
+      @book.destroy
+  
+      respond_to do |format|
+        format.html { redirect_to(books_url, :notice => "Book deleted OK") }
+        format.xml  { head :ok }
+      end
+    else
+      redirect_to(books_url, :notice => "You can't delete books that are on loan")
     end
   end
 end
