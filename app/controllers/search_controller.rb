@@ -1,7 +1,6 @@
 class SearchController < ApplicationController
   def index
     @q = params[:q].strip.downcase
-    Search.create(:query => @q)
 #     @type = params[:type]
 #     if @type == 'titles'
       # sqlite uses || operator to concat strings, postgres uses TEXTCAT
@@ -10,7 +9,7 @@ class SearchController < ApplicationController
         FROM titles
         WHERE LOWER(TEXTCAT(TEXTCAT(title, ' '), subtitle)) LIKE(?)", "%#{@q}%"
       ])
-      Search.create(:query => @q, :results => @titles.count || 0)
+      Search.create(:query => @q, :results => @titles.count)
 
 #     elsif @type == 'authors'
 #       @titles = Author.find_by_sql("
