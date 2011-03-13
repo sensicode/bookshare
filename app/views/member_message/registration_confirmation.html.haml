@@ -31,7 +31,7 @@
 %p
   Your username is
   %strong
-    = link_to @recipient.login, url_for(:controller => 'members', :action => :show, :login => @recipient.login, :only_path => false)
+    = @recipient.login
   and you can login at
   = link_to url_for(login_url), login_url
     
