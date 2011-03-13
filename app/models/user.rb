@@ -2,6 +2,7 @@ require 'digest/md5'
 
 class User < ActiveRecord::Base
   has_many :books
+  has_many :titles, :through => :books
 
   has_many :watchings
   has_many :watched_books, :through => :watchings, :source => :book
@@ -29,6 +30,12 @@ class User < ActiveRecord::Base
             
   validates_presence_of :first_name, :last_name, :address1, :city, :postcode
   
+#   after_create :send_registration_confirmation
+  
+  def to_param
+    login
+  end
+  
   # http://littleshardsofruby.posterous.com/changing-authlogics-login-field
   acts_as_authentic do |c|
     c.validates_format_of_login_field_options = {:with => /^[a-zA-Z0-9]+$/, :message => I18n.t('error_messages.login_invalid', :default => "should use only letters and numbers")}   
@@ -52,4 +59,9 @@ class User < ActiveRecord::Base
     # Not if they're already watching it
     self.watched_books.include?(book)
   end
+  
+#   def send_registration_confirmation
+#     email = MemberMessage.registration_confirmation
+#     email.deliver
+#   end
 end
