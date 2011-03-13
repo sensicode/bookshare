@@ -15,3 +15,6 @@
     = f.label :remember_me
   %div
     = f.submit "Log In"
+
+  %p
+    = link_to "Forgotten your password?", :controller => :password_resets, :action => :new
