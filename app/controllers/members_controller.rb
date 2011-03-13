@@ -8,7 +8,7 @@ class MembersController < ApplicationController
 
     respond_to do |format|
       format.html
-#       format.rss { render :layout => false } # show.rss.builder
+      format.rss { render :layout => false } # show.rss.builder
     end
   end
 end
