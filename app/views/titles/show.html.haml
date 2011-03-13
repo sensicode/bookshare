@@ -1,5 +1,7 @@
+- @page_title = @title.title_and_author
+
 %span{:style => "float: left;"}
-  = image_tag @title.image_url, :height => 80
+  = image_tag @title.image_url, :height => 80, :alt => @title.title_and_author
 
 %div{:style => "margin-left: 130px;"}
   %h1
@@ -29,7 +31,7 @@
     %table    
       - for book in @title.books
         %tr
-          %td= link_to (image_tag book.user.gravatar_image_url(50)), :controller => :members, :action => :show, :login => book.user.login
+          %td= link_to (image_tag book.user.gravatar_image_url(50), :alt => book.user.login), :controller => :members, :action => :show, :login => book.user.login
           %td= link_to book.user.login, :controller => :members, :action => :show, :login => book.user.login
           %td
             = pluralize(book.user.books.count, "book")
