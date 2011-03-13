@@ -42,6 +42,7 @@ GEM
       abstract (>= 1.0.0)
     haml (3.0.23)
     i18n (0.4.2)
+    isbn (2.0.5)
     mail (2.2.9)
       activesupport (>= 2.3.6)
       i18n (~> 0.4.1)
@@ -86,6 +87,7 @@ DEPENDENCIES
   cuecat
   dynamic_form
   haml
+  isbn
   nokogiri
   rails (= 3.0.1)
   rails3-generators

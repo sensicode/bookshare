@@ -11,6 +11,11 @@ class Title < ActiveRecord::Base
 #     isbn13 + '-' + title.parameterize + '-' + authors.first.name.parameterize
 #   end
   
+  def isbn10
+    # http://rubygems.org/gems/isbn
+    ISBN.ten(isbn13)
+  end
+  
   def title_and_author
     "#{self.title} by #{self.authors.first.name}"
   end

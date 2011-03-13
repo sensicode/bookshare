@@ -22,8 +22,16 @@
   
   %p
     ISBN-13:
-    %a{ :href => "http://isbn.nu/" + @title.isbn13 }
-      = @title.isbn13
+    = @title.isbn13
+    
+  %p
+    Search for this book at 
+    %a{ :href => "http://www.sutton-libraries.gov.uk/uhtbin/isbn-search/" + @title.isbn10 }<
+      Sutton Libraries 
+    %a{ :href => "http://www.amazon.co.uk/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=#{@title.isbn13}" }<
+      Amazon.co.uk 
+    %a{ :href => "http://isbn.nu/" + @title.isbn13 }<
+      ISBN.nu
 
   - if @title.books.count > 0 
     %h2{:style => "margin-top: 60px;"} You can borrow this book from:
