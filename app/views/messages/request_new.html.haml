@@ -21,11 +21,9 @@
   - elsif @book.status == StaticData::BOOK_STATUS['ONLOAN']
     is due on
     = nice_date(@book.loans.last.due)
-    \.
   - else
     is
     = @book.status_text
-    \.
 
 .help
   %p

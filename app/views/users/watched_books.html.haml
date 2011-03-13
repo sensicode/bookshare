@@ -27,7 +27,19 @@
           = link_to image_tag(book.user.gravatar_image_url(60)), :controller => :members, :action => :show, :login => book.user.login
           %br
           = link_to book.user.login, :controller => :members, :action => :show, :login => book.user.login
+        %td
+          - if book.status == StaticData::BOOK_STATUS['AVAILABLE']
+            available
+          - elsif book.status == StaticData::BOOK_STATUS['ONLOAN']
+            due on
+            = nice_date(book.loans.last.due)
+          - else
+            = book.status_text  
+        %td
+          - if current_user && ! current_user.owns?(book) && (book.status == StaticData::BOOK_STATUS['AVAILABLE'] || book.status == StaticData::BOOK_STATUS['ONLOAN'])
+            = link_to "Request Book", :controller => :messages, :action => :request_new, :book => book, :recipient => book.user.login
         %td= link_to 'Unwatch', watching_path(watching), :method => :delete
+
 
 - else
   %p You're not watching any books.
