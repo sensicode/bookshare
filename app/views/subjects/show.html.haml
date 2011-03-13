@@ -1,11 +1,6 @@
-%h1
-  = @subject.name
+%h1= @page_title = @subject.name
 
 - if @subject.titles.count > 0  
-  %p
-    = pluralize(@subject.titles.count, "book")
-    for this subject:
-
   %table    
     - for title in @subject.titles
       %tr
