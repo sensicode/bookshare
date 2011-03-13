@@ -8,8 +8,8 @@ class BooksController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @books }
-      format.json { render :json => @books }
+#       format.xml  { render :xml => @books.to_xml(:include => :title) }
+#       format.json { render :json => @books.to_json(:include => :title) }
     end
   end
 
