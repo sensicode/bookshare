@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
             
   validates_presence_of :first_name, :last_name, :address1, :city, :postcode
   
-#   after_create :send_registration_confirmation
+  after_create :send_registration_confirmation
   
   def to_param
     login
@@ -60,8 +60,8 @@ class User < ActiveRecord::Base
     self.watched_books.include?(book)
   end
   
-#   def send_registration_confirmation
-#     email = MemberMessage.registration_confirmation
-#     email.deliver
-#   end
+  def send_registration_confirmation
+    email = MemberMessage.registration_confirmation(self)
+    email.deliver
+  end
 end

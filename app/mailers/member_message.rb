@@ -29,4 +29,15 @@ class MemberMessage < ActionMailer::Base
     end
   end
   
+  def registration_confirmation(recipient)
+    @recipient = recipient
+    mail(
+      :to => recipient.email,
+      :from => "noreply@sutton.gov.uk",
+      :subject => "Welcome to Sutton Bookshare"
+    ) do |format|
+      format.html
+#       format.text
+    end
+  end
 end
