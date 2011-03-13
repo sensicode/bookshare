@@ -47,7 +47,7 @@ class MemberMessage < ActionMailer::Base
     mail(
       :to => user.email,
       :from => "noreply@sutton.gov.uk",
-      :subject => "Password Reset Instructions"
+      :subject => "Sutton Bookshare password reset instructions"
     ) do |format|
       format.html
       format.text
