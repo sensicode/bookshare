@@ -12,6 +12,7 @@ xml.rss :version => "2.0" do
         xml.pubDate title.created_at.to_s(:rfc822)
         xml.link title_url(title)
         xml.guid title_url(title)
+        xml.isbn13 title.isbn13
       end
     end
   end
