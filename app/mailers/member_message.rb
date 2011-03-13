@@ -40,4 +40,17 @@ class MemberMessage < ActionMailer::Base
 #       format.text
     end
   end
+  
+  def password_reset_instructions(user)
+    @edit_password_reset_url = edit_password_reset_url(user.perishable_token)
+
+    mail(
+      :to => user.email,
+      :from => "noreply@sutton.gov.uk",
+      :subject => "Password Reset Instructions"
+    ) do |format|
+      format.html
+      format.text
+    end
+  end
 end

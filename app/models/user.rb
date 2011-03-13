@@ -35,6 +35,12 @@ class User < ActiveRecord::Base
   def to_param
     login
   end
+
+#   http://www.binarylogic.com/2008/11/16/tutorial-reset-passwords-with-authlogic/
+  def deliver_password_reset_instructions!  
+    reset_perishable_token!  
+    MemberMessage.password_reset_instructions(self).deliver
+  end 
   
   # http://littleshardsofruby.posterous.com/changing-authlogics-login-field
   acts_as_authentic do |c|

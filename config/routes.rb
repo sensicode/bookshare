@@ -6,10 +6,11 @@ SuttonOpenLibrary::Application.routes.draw do
   resources :watchings
   resources :users
   
-  resource :account, :controller => "users"
+  resource :account, :controller => :users
   root :to => 'pages#home'
   
   resources :user_sessions
+  resources :password_resets
 
   match 'watchlist' => "users#watched_books"
   match 'login' => "user_sessions#new",      :as => :login
