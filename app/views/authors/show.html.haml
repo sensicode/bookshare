@@ -1,4 +1,9 @@
-%h1= @page_title = @author.name
+- content_for :head do
+  = auto_discovery_link_tag :rss, { :controller => :authors, :action => :show, :format => :rss }, { :title => "Books by #{@author.name} on Sutton Bookshare" }
+
+%h1
+  = link_to (image_tag 'rss.png'),  :controller => :authors, :action => :show, :format => :rss
+  = @page_title = @author.name
 
 - if @author.titles.count > 0  
   %p

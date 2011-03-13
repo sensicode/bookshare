@@ -6,6 +6,7 @@ class AuthorsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
+      format.rss { render :layout => false } # show.rss.builder
       format.xml  { render :xml => @author }
       format.json { render :json => @author }
     end
