@@ -5,6 +5,10 @@ class MembersController < ApplicationController
 
   def show
     @user = User.find_by_login(params[:login])
-    @very_overdue_count = 0
+
+    respond_to do |format|
+      format.html
+#       format.rss { render :layout => false } # show.rss.builder
+    end
   end
 end
