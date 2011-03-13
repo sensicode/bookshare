@@ -7,9 +7,9 @@ class Title < ActiveRecord::Base
   validates_associated :subject
   validates_isbn :isbn13, :with => :isbn13
   
-#   def to_param
-#     isbn13 + '-' + title.parameterize + '-' + authors.first.name.parameterize
-#   end
+  def to_param
+    isbn13
+  end
   
   def isbn10
     # http://rubygems.org/gems/isbn

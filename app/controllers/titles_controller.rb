@@ -3,7 +3,7 @@ class TitlesController < ApplicationController
   # GET /titles/1.xml
   # GET /titles/1.json
   def show
-    @title = Title.find(params[:id])
+    @title = Title.find_by_isbn13(params[:id])
     @watching = Watching.new
     
     respond_to do |format|
