@@ -21,10 +21,6 @@
       = link_to @title.subject.name, subject_path(@title.subject)
   
   %p
-    ISBN-13:
-    = @title.isbn13
-    
-  %p
     Search for this book at 
     %a{ :href => "http://www.sutton-libraries.gov.uk/uhtbin/isbn-search/" + @title.isbn10 }<
       Sutton Libraries 
@@ -32,6 +28,11 @@
       Amazon.co.uk 
     %a{ :href => "http://isbn.nu/" + @title.isbn13 }<
       ISBN.nu
+
+  %p
+    ISBN-13:
+    = @title.isbn13
+
 
   - if @title.books.count > 0 
     %h2{:style => "margin-top: 60px;"} You can borrow this book from:
