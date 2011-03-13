@@ -7,6 +7,14 @@ class Title < ActiveRecord::Base
   validates_associated :subject
   validates_isbn :isbn13, :with => :isbn13
   
+#   def to_param
+#     isbn13 + '-' + title.parameterize + '-' + authors.first.name.parameterize
+#   end
+  
+  def title_and_author
+    "#{self.title} by #{self.authors.first.name}"
+  end
+  
   def self.find_or_create_by_isbn13(isbn13)
     
     isbn13.strip!
