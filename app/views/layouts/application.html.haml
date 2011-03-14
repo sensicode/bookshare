@@ -14,11 +14,11 @@
     .access
       %a{ :href => '#main', :accesskey => 's' }<
         Skip to Content
-      |
+      &nbsp;&nbsp;
       =link_to_unless_current "Accessibility", { :controller => 'pages', :action => 'accessibility' }, :accesskey => '0'
-      |
+      &nbsp;&nbsp;
       =link_to_unless_current "Terms of Service", { :controller => 'pages', :action => 'terms' }, :accesskey => '8'
-      |
+      &nbsp;&nbsp;
       =link_to_unless_current "Contact Us", { :controller => 'pages', :action => 'contact' }, :accesskey => '9'
         
     #search
@@ -32,28 +32,28 @@
 
     #userbar
       = link_to_unless_current "Home", { :controller => 'pages', :action => 'home' }, :accesskey => '1'
-      |
+      &nbsp;&nbsp;
       - if current_user
         = image_tag current_user.gravatar_image_url(25), :alt => current_user.login
         Logged in as
         %strong
           = link_to current_user.login, :controller => :members, :action => :show, :login => current_user.login
-        |
+        &nbsp;&nbsp;
         = link_to_unless_current "My Books (#{current_user.books.count.to_s})", books_path, :accesskey => '2'
-        |
+        &nbsp;&nbsp;
         = link_to_unless_current "Lent (#{current_user.active_loans.count.to_s})", :lent, :accesskey => '3'
-        |
+        &nbsp;&nbsp;
         = link_to_unless_current "Borrowed (#{current_user.active_borrowings.count.to_s})", :borrowings, :accesskey => '4'
-        |
+        &nbsp;&nbsp;
         = link_to_unless_current "Watch List (#{current_user.watched_books.count.to_s})", :watchlist, :accesskey => '5'
         -#
-          |
+          &nbsp;&nbsp;
           = link_to_unless_current "My Account", :account, :accesskey => '6'
-        |
+        &nbsp;&nbsp;
         = link_to_unless_current "Log Out", :logout, :method => :delete, :confirm => "Are you sure you want to logout?"
       - else
         = link_to_unless_current "Register", :register
-        |
+        &nbsp;&nbsp;
         = link_to_unless_current "Log In", :login
     
     #main
@@ -72,12 +72,14 @@
       service developed in partnership with 
       %a{ :href => "http://www.nesta.org.uk/" }<
         NESTA
-      | 
+      &nbsp;&nbsp;
       %a{ :href => 'http://suttonopenlibrary.wordpress.com/' }<
         Sutton Open Library blog
-      | 
+      &nbsp;&nbsp;
       %a{ :href => 'http://www.sutton-libraries.gov.uk/' }<
         Sutton Libraries 
-      | 
+      &nbsp;&nbsp;
       %a{ :href => 'https://github.com/adrianshort/Sutton-Open-Library' }<
         Source code on Github
+      &nbsp;&nbsp;
+      = link_to image_tag ('twitter.png', :alt => "@suttonbookshare on Twitter", :size => "16x16"), "http://twitter.com/suttonbookshare"
