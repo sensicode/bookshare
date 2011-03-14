@@ -202,3 +202,18 @@ a.button:hover
 {
   float: none;
 }
+
+.left_col
+{
+  float: left;
+}
+
+.right_col
+{
+  margin-left: 130px;
+}
+
+.top_spacer
+{
+  margin-top: 30px;
+}
