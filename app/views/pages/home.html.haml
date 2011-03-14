@@ -1,3 +1,6 @@
+- content_for :head do
+  = auto_discovery_link_tag :rss, titles_path(:format => :rss), { :title => "Sutton Bookshare: New books" }
+
 #puffbox
   %p{ :style => 'font-size: 200%' }
     Lend and borrow books with your neighbours in Sutton
@@ -12,6 +15,9 @@
 .clear
   
 - if @books.count > 0
+
+  = link_to (image_tag 'rss.png'), titles_path(:format => :rss)
+
   %table
     %tr
     - i = 0
