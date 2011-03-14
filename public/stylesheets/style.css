@@ -105,6 +105,11 @@ h1.logo
   vertical-align: text-bottom;
 }
 
+#userbar a, #userbar a:visited, #userbar a:hover
+{
+  text-decoration: none;
+}
+
 .panel
 {
   background-color: beige;
