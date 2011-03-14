@@ -16,7 +16,7 @@
   
 - if @books.count > 0
 
-  = link_to (image_tag 'rss.png'), titles_path(:format => :rss)
+  = link_to (image_tag 'rss.png', :alt => "RSS feed for new books", :size => "16x16"), titles_path(:format => :rss)
 
   %table
     %tr
