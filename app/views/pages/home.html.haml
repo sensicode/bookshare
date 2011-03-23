@@ -1,5 +1,5 @@
 - content_for :head do
-  = auto_discovery_link_tag :rss, titles_path(:format => :rss), { :title => "Sutton Bookshare: New books" }
+  = auto_discovery_link_tag :atom, titles_path(:format => :atom), { :title => "Sutton Bookshare: New books" }
 
 #puffbox
   %p{ :style => 'font-size: 200%' }
@@ -16,7 +16,7 @@
   
 - if @books.count > 0
 
-  = link_to (image_tag 'rss.png', :alt => "RSS feed for new books", :size => "16x16"), titles_path(:format => :rss)
+  = link_to (image_tag 'rss.png', :alt => "Atom feed for new books", :size => "16x16"), titles_path(:format => :atom)
 
   %table
     %tr

@@ -4,6 +4,7 @@ class TitlesController < ApplicationController
     
     respond_to do |format|
       format.rss { render :layout => false } # index.rss.builder
+      format.atom { render :layout => false } # index.atom.builder
     end
   end
 
