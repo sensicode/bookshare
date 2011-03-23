@@ -96,8 +96,9 @@ h1.logo
 #userbar
 {
   background-color: #eee;
-  padding: 5px 5px;
+  padding: 5px 15px;
   margin: 10px 0 30px 0;
+  vertical-align: center;
 }
 
 #userbar img
