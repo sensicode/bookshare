@@ -16,9 +16,7 @@
   - if @book.status == StaticData::BOOK_STATUS['AVAILABLE']
     is currently available.
   - elsif @book.status == StaticData::BOOK_STATUS['ONLOAN']
-    is due on
-    = nice_date(@book.loans.last.due)
-    \.
+    is currently on loan.
   - else
     is
     = @book.status_text

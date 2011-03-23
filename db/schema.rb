@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110228221908) do
+ActiveRecord::Schema.define(:version => 20110323151412) do
 
   create_table "authors", :force => true do |t|
     t.string   "name",       :default => ""
@@ -38,7 +38,6 @@ ActiveRecord::Schema.define(:version => 20110228221908) do
     t.integer  "book_id"
     t.integer  "lender_id"
     t.integer  "borrower_id"
-    t.date     "due"
     t.datetime "returned"
     t.datetime "created_at"
     t.datetime "updated_at"

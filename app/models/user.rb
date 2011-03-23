@@ -19,13 +19,13 @@ class User < ActiveRecord::Base
             :class_name => "Loan",
             :foreign_key => :borrower_id,
             :conditions => { :returned => nil },
-            :order => 'due'
+            :order => 'created_at DESC'
             
   has_many  :active_loans,
             :class_name => "Loan",
             :foreign_key => :lender_id,
             :conditions => { :returned => nil },
-            :order => 'due'
+            :order => 'created_at DESC'
             
             
   validates_presence_of :first_name, :last_name, :address1, :city, :postcode

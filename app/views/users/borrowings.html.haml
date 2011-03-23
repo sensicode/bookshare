@@ -7,7 +7,7 @@
     %tr
       %th
       %th
-      %th Due on
+      %th Borrowed
       %th Lender
       %th
     - for loan in @loans
@@ -23,7 +23,9 @@
           %br
           = link_to book.title.authors.first.name, author_path(book.title.authors.first)
           %br
-        %td= nice_date(loan.due)
+        %td
+          = time_ago_in_words loan.created_at
+          ago
         %td
           = link_to image_tag(loan.lender.gravatar_image_url(60)), :controller => :members, :action => :show, :login => loan.lender.login
           %br

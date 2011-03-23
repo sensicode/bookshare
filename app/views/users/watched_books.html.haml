@@ -31,8 +31,7 @@
           - if book.status == StaticData::BOOK_STATUS['AVAILABLE']
             available
           - elsif book.status == StaticData::BOOK_STATUS['ONLOAN']
-            due on
-            = nice_date(book.loans.last.due)
+            on loan
           - else
             = book.status_text  
         %td

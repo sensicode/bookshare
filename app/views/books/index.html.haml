@@ -21,7 +21,7 @@
     %tr
       %th
       %th
-      %th Due
+      %th Lent for
       %th
   
     - for book in @books
@@ -39,7 +39,7 @@
           - if book.status == StaticData::BOOK_STATUS['AVAILABLE']
             = link_to "Lend", new_loan_path(:book_id => book)
           - elsif book.status == StaticData::BOOK_STATUS['ONLOAN']
-            = nice_date(book.loans.last.due)
+            = time_ago_in_words book.loans.last.created_at
           - else
             = book.status_text
         %td

@@ -14,18 +14,18 @@
   by
   = link_to @book.title.authors.first.name, author_path(@book.title.authors.first)
   
-%p
-  This book
-  - if @book.status == StaticData::BOOK_STATUS['AVAILABLE']
-    is currently available.
-  - elsif @book.status == StaticData::BOOK_STATUS['ONLOAN']
-    is due on
-    = nice_date(@book.loans.last.due)
-  - else
-    is
-    = @book.status_text
 
 .help
+  %p
+    This book
+    - if @book.status == StaticData::BOOK_STATUS['AVAILABLE']
+      is currently available.
+    - elsif @book.status == StaticData::BOOK_STATUS['ONLOAN']
+      is currently on loan. You're free to enquire about it anyway.
+    - else
+      is
+      = @book.status_text
+
   %p
     %strong
       = link_to @recipient.login, :controller => :members, :action => :show, :login => @recipient.login

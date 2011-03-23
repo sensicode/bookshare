@@ -21,9 +21,7 @@
     %br
     = text_field_tag :borrower_login, @borrower_login
 
-  %p
-    Loan period:
-    = text_field_tag :loan_period_weeks, {}, { :size => 2, :maxlength => 2 }
-    weeks
-
   = f.submit "Lend Book"
+  
+.help
+  Sutton Bookshare keeps track of how long a book has stayed out on loan for but it doesn't use due dates, fixed loan periods or renewals. You're free to agree and renegotiate the loan period informally with the borrower at any time. This keeps Sutton Bookshare friendly and flexible.

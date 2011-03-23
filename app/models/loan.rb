@@ -9,7 +9,7 @@ class Loan < ActiveRecord::Base
               :class_name => "User",
               :foreign_key => :borrower_id
 
-  validates_presence_of :lender, :borrower, :book, :due
+  validates_presence_of :lender, :borrower, :book
 
   validate :borrower_cant_be_lender
               
@@ -18,8 +18,9 @@ class Loan < ActiveRecord::Base
   end
   
   protected
-    def borrower_cant_be_lender
-      errors.add(:borrower, "you can't lend a book to yourself") if borrower == lender
-    end
+  
+  def borrower_cant_be_lender
+    errors.add(:borrower, "you can't lend a book to yourself") if borrower == lender
+  end
   
 end

@@ -19,7 +19,6 @@ class LoansController < ApplicationController
     @loan.book = current_user.books.find(params[:book_id])
     @loan.borrower = User.find_by_login(params[:borrower_login])
     @loan.lender = current_user
-    @loan.due = Date.today + 7 * params[:loan_period_weeks].to_i
     
     if @loan.save
       @loan.book.update_attribute :status, StaticData::BOOK_STATUS['ONLOAN']
