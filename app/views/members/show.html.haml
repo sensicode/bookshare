@@ -1,5 +1,5 @@
 - content_for :head do
-  = auto_discovery_link_tag :rss, { :controller => :members, :action => :show, :login => @user.login, :format => :rss }, { :title => "#{@user.login}'s Books on Sutton Bookshare" }
+  = auto_discovery_link_tag :atom, { :controller => :members, :action => :show, :login => @user.login, :format => :atom }, { :title => "#{@user.login}'s Books on Sutton Bookshare" }
 
 %h1= @page_title = @user.login
 
@@ -45,7 +45,7 @@
         currently lent to others
 
 %h2
-  = link_to (image_tag 'rss.png'),  :controller => :members, :action => :show, :login => @user.login, :format => :rss
+  = link_to (image_tag 'rss.png'),  :controller => :members, :action => :show, :login => @user.login, :format => :atom
   Books
 
 - if @user.books.count > 0
