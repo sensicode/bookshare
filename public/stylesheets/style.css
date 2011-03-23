@@ -31,6 +31,11 @@ td
   margin: 5px 0;
 }
 
+th
+{
+  text-align: left;
+}
+
 .book_list_title
 {
   font-size: 125%;
@@ -145,6 +150,7 @@ h1.logo
   background-color: beige;
   color: black;
   margin: 20px 0;
+  line-height: 150%;
 }
 
 .bigfield
