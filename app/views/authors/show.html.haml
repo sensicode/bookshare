@@ -3,13 +3,10 @@
 
 %h1
   = link_to (image_tag 'rss.png'), author_path(@author, :format => :atom)
+  Books by 
   = @page_title = @author.name
 
 - if @author.titles.count > 0  
-  %p
-    = pluralize(@author.titles.count, "book")
-    by this author:
-
   %table    
     - for title in @author.titles
       %tr
@@ -20,4 +17,5 @@
           - unless title.subtitle.nil?
             %br
             = title.subtitle
-            
+- else
+  No books currently listed.
