@@ -22,7 +22,6 @@ class LoansController < ApplicationController
     
     if @loan.save
       @loan.book.update_attribute :status, StaticData::BOOK_STATUS['ONLOAN']
-#       current_user.update_attribute :default_loan_period_weeks, params[:loan_period_qty].to_i
       redirect_to :lent, :notice => "Book lent OK"
     else
       redirect_to :books, :alert => "That didn't work"
