@@ -1,8 +1,10 @@
 require 'test_helper'
 
 class PagesControllerTest < ActionController::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
+  test "should get home page" do
+    get :home
+    assert_response :success
+    assert_not_nil assigns(:books)
+    assert_equal 30, assigns(:books).count
   end
 end

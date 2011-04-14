@@ -1,7 +1,9 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  title: MyString
-
-two:
-  title: MyString
+thebridge:
+  title: thebridge
+  user: alice
+  status: 0
+  
+outliers:
+  title: outliers
+  user: bob
+  status: 0
