@@ -1,10 +1,11 @@
 class TitlesController < ApplicationController
   def index
-    @titles = Title.all :order => 'created_at DESC', :limit => 15
+    @titles = Title.all :order => 'created_at DESC'
     
     respond_to do |format|
-      format.rss { render :layout => false } # index.rss.builder
       format.atom { render :layout => false } # index.atom.builder
+      format.xml  { render :xml => @titles, :include => [:books, :subject, :authors] }
+      format.json  { render :json => @titles, :include => [:books, :subject, :authors] }
     end
   end
 
@@ -17,8 +18,8 @@ class TitlesController < ApplicationController
     
     respond_to do |format|
       format.html
-#       format.xml  { render :xml => @title }
-#       format.json { render :json => @title }
+      format.xml  { render :xml => @title, :include => [:books, :subject, :authors] }
+      format.json { render :json => @title, :include => [:books, :subject, :authors] }
     end
   end
 end

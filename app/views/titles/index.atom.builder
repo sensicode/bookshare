@@ -6,7 +6,7 @@ xml.feed :xmlns => 'http://www.w3.org/2005/Atom' do
   xml.updated @titles.last.created_at.strftime("%Y-%m-%dT%H:%M:%SZ")
   xml.id url_for( :controller => :titles, :action => :index,  :format => :atom, :only_path => false)
 
-  for title in @titles
+  for title in @titles[0..14]
     xml.entry do
       xml.title title.title_and_author
       xml.content title.description, :type => 'html'
