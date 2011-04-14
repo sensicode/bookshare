@@ -17,23 +17,23 @@ class Book < ActiveRecord::Base
       'lost'
     ]
     
-    statuses[self.status]
+    statuses[status]
   end
 
   def available?
-    self.status == 0
+    status == StaticData::BOOK_STATUS['AVAILABLE']
   end
 
   def on_loan?
-    self.status == 1
+    status == StaticData::BOOK_STATUS['ONLOAN']
   end
 
   def deleted?
-    self.status == 2
+    status == StaticData::BOOK_STATUS['DELETED']
   end
   
   def lost?
-    self.status == 3
+    status == StaticData::BOOK_STATUS['LOST']
   end
   
 end
