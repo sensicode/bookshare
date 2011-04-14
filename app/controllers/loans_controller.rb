@@ -21,7 +21,6 @@ class LoansController < ApplicationController
     @loan.lender = current_user
     
     if @loan.save
-      @loan.book.update_attribute :status, StaticData::BOOK_STATUS['ONLOAN']
       redirect_to :lent, :notice => "Book lent OK"
     else
       redirect_to :books, :alert => "That didn't work"
@@ -32,12 +31,9 @@ class LoansController < ApplicationController
   # PUT /loans/1.xml
   def update
     @loan = current_user.active_loans.find(params[:id])
-    @loan.returned = Time.now
 
     respond_to do |format|
-      if @loan.save
-        @loan.book.update_attribute :status, StaticData::BOOK_STATUS['AVAILABLE']
-
+      if @loan.give_back
         format.html { redirect_to(:lent, :notice => 'Book checked in OK') }
 #         format.xml  { head :ok }
       else
