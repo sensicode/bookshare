@@ -3,8 +3,9 @@ class Title < ActiveRecord::Base
   has_and_belongs_to_many :authors
   has_many :books
   
+  validates_length_of :title, :minimum => 1
   validates_associated :authors
-  validates_associated :subject
+#   validates_associated :subject
   validates_isbn :isbn13, :with => :isbn13
   
   def to_param
@@ -80,8 +81,9 @@ class Title < ActiveRecord::Base
     end
 
     t.isbn13 = isbn13
+    
     t.save
-
-    return t
+    
+    t
   end
 end
