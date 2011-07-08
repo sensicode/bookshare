@@ -1,4 +1,6 @@
 SuttonOpenLibrary::Application.routes.draw do
+  themes_for_rails
+  
   resources :books
   resources :authors
   resources :subjects

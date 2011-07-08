@@ -8,7 +8,6 @@ class MembersController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.rss { render :layout => false } # show.rss.builder
       format.atom { render :layout => false } # show.atom.builder
     end
   end

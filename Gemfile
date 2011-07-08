@@ -7,6 +7,7 @@ gem 'dynamic_form'
 gem 'nokogiri'
 gem 'cuecat'
 gem 'isbn'
+gem 'themes_for_rails'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

@@ -1,0 +1,111 @@
+<h1>NESTA Bookshare</h1>
+
+<p>A web application for peer-to-peer community lending and borrowing of books.</p>
+
+<p>Copyright (c) 2011 <a href="http://www.sutton.gov.uk/">London Borough of Sutton</a></p>
+
+<p>Funded by <a href="http://www.nesta.org.uk/">NESTA</a></p>
+
+<h2>Licence</h2>
+
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.</p>
+
+<p>You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+<h2>Installation</h2>
+
+<p>In Terminal, move to the folder you want to contain your Bookshare application.</p>
+
+<p>We're going to set up Bookshare for the fictional town of Casterbridge.</p>
+
+<hr />
+
+<p>Fork the main project repository into your own account by clicking the <strong>Fork</strong> button on the <a href="https://github.com/adrianshort/nesta-bookshare">main project page</a>.</p>
+
+<hr />
+
+<p>Clone your new git repository to your local machine:</p>
+
+<pre><code>$ git clone git://github.com/your-username/nesta-bookshare.git casterbridgebookshare
+</code></pre>
+
+<hr />
+
+<p>Move into your Bookshare folder:</p>
+
+<pre><code>$ cd casterbridgebookshare
+</code></pre>
+
+<hr />
+
+<p>Make a copy of the default theme to use for your own site.</p>
+
+<p><strong>Do not edit the default theme itself as it'll get overwritten when you next pull down a copy of the latest Bookshare version.</strong></p>
+
+<pre><code>$ cp -r themes/default/ themes/casterbridge/
+</code></pre>
+
+<hr />
+
+<p>Make a copy of the sample configuration file:</p>
+
+<pre><code>$ cp config/config-sample.yml config/config.yml
+</code></pre>
+
+<hr />
+
+<p>Open <code>config/config.yml</code> in your text editor and fill in your details. You can change these at any time in future.</p>
+
+<p>It might look something like this:</p>
+
+<pre><code>sitename: Casterbridge Bookshare
+theme: casterbridge
+email: mike.henchard@casterbridge.gov.uk
+noreply_email: noreply@casterbridge.gov.uk
+twitter: casterbridgebookshare
+google_analytics: UA-XXXXX-X
+</code></pre>
+
+<p><em>sitename</em> is the human-readable name of your site</p>
+
+<p><em>theme</em> is the name of your theme's folder within <code>/themes</code></p>
+
+<p><em>email</em> is your main public contact email address</p>
+
+<p><em>noreply_email</em> is used as the sender address on some outbound email messages. Use a noreply address at your domain if you've got one or your main contact address if you're happy to receive replies to these.</p>
+
+<p><em>twitter</em> is the name of the Twitter account for your Bookshare project. Don't include the @ sign at the beginning.  Leave this out if you don't have a Twitter account for your Bookshare.</p>
+
+<p><em>google_analytics</em> is the web property ID (starts with "UA") for your site on <a href="http://www.google.com/intl/en/analytics/">Google Analytics</a>. If you're not using Analytics to track your web statistics just leave this blank.</p>
+
+<hr />
+
+<p>Add and commit the <code>config.yml</code> file to your local git repository:</p>
+
+<pre><code>$ git add config/config.yml
+$ git commit config/config.yml -m "Added my details"
+</code></pre>
+
+<hr />
+
+<p>Put your database details in <code>config/database.yml</code></p>
+
+<hr />
+
+<p>Build the database:</p>
+
+<pre><code>$ rake db:migrate
+</code></pre>
+
+<hr />
+
+<p>Now you're good to go.</p>

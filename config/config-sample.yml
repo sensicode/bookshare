@@ -1,0 +1,6 @@
+sitename: Anytown Bookshare                     # Human-readable name of your site
+theme: anytown                                  # Name of your theme's folder in /themes
+email: your-contact-email@anytown.gov.uk        # Your main public email address
+noreply_email: noreply@anytown.gov.uk           # No-reply email address for outbound emails
+twitter: anytownbookshare                       # Twitter account name for your site. Omit the @ sign. Leave blank if none.
+google_analytics: UA-XXXXX-X                    # Google Analytics web property ID. Leave blank if none.
