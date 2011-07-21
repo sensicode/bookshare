@@ -90,6 +90,13 @@ _google\_analytics_ is the web property ID (starts with "UA") for your site on [
 
 ---
 
+Add and commit the `config.yml` file to your local git repository:
+
+	$ git add config/config.yml
+	$ git commit config/config.yml -m "Added my details"
+
+---
+
 Put your database details in `config/database.yml`
 
 ---
