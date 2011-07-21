@@ -23,13 +23,13 @@ SuttonOpenLibrary::Application.configure do
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
-
+  
   # Mailer settings for MockSmtp on OSX
-  config.action_mailer.delivery_method = :sendmail
-  config.action_mailer.sendmail_settings = {
-    :location => '/usr/sbin/sendmail',
-    :arguments => '-i -t'
-  }
+  config.action_mailer.delivery_method = :smtp
 
+  ActionMailer::Base.smtp_settings = {
+    :address => "0.0.0.0",
+    :port => 1025
+  }
 end
 
