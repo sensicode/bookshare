@@ -23,6 +23,7 @@ alice:
   county: Anyshire
   postcode: AN1 1AB
   phone: 1234567890
+  status: admin
   
 bob:
   login: bob
@@ -47,3 +48,29 @@ bob:
   county: Anyshire
   postcode: AN2 2CD
   phone: 0987654321
+  status: user
+
+charlie:
+  login: charlie
+  email: charlie@test.test
+  crypted_password: 12345
+  password_salt: 12345
+  persistence_token: 12345
+  single_access_token: 12345
+  perishable_token: 12345
+  login_count: 0
+  failed_login_count: 0
+  last_request_at: 
+  current_login_at:
+  last_login_at:
+  current_login_ip:
+  last_login_ip:
+  first_name: Charlie
+  last_name: Smith
+  address1: 555 Another Road
+  address2:
+  city: Anytown
+  county: Anyshire
+  postcode: AN2 2CD
+  phone: 0287943857
+  status: admin

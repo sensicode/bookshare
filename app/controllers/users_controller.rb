@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-  before_filter :require_no_user, :only => [:new, :create, :show]
-  before_filter :require_user, :only => [:edit, :update, :watched_books, :loans]
+  before_filter :require_no_user, :only => [ :new, :create ]
+  before_filter :require_user, :only => [ :edit, :update, :watched_books, :loans ]
+  before_filter :require_admin, :only => [ :unban, :promote, :demote, :show ]
   
   def new
     @user = User.new
@@ -8,6 +9,10 @@ class UsersController < ApplicationController
   
   def create
     @user = User.new(params[:user])
+
+    @user.status = 'user'
+    @user.banned = false
+
     if @user.save
       flash[:notice] = "Thanks for joining #{CONFIG[:sitename]}. Welcome!"
       redirect_back_or_default books_path
@@ -17,21 +22,35 @@ class UsersController < ApplicationController
   end
   
   def show
-    @user = @current_user
+    @user = User.find(params[:id])
   end
 
-  def edit
-    @user = @current_user
+#   def edit
+#     @user = @current_user
+#   end
+  
+#   def update
+#     @user = @current_user # makes our views "cleaner" and more consistent
+#     if @user.update_attributes(params[:user])
+#       flash[:notice] = "Account updated!"
+#       redirect_to account_url
+#     else
+#       render :action => :edit
+#     end
+#   end
+  
+  def promote
+    @user = User.find_by_login(params[:id])
+    @user.promote
+    flash[:notice] = "#{@user.login} promoted OK"
+    redirect_to :back
   end
   
-  def update
-    @user = @current_user # makes our views "cleaner" and more consistent
-    if @user.update_attributes(params[:user])
-      flash[:notice] = "Account updated!"
-      redirect_to account_url
-    else
-      render :action => :edit
-    end
+  def demote
+    @user = User.find_by_login(params[:id])
+    @user.demote
+    flash[:notice] = "#{@user.login} demoted OK"
+    redirect_to :back
   end
     
   def watched_books
@@ -44,5 +63,12 @@ class UsersController < ApplicationController
   
   def borrowings
     @loans = current_user.active_borrowings
+  end
+  
+  def unban
+    @user = User.find(params[:id])
+    @user.unban(current_user)
+    flash[:notice] = "#{@user.login} unbanned OK"
+    redirect_to :back
   end
 end

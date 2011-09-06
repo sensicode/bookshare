@@ -6,4 +6,19 @@ thebridge:
 outliers:
   title: outliers
   user: bob
+  status: 1
+  
+middlemarch:
+  title: middlemarch
+  user: bob
+  status: 2
+  
+plainspace:
+  title: plainspace
+  user: bob
+  status: 3
+
+librarymashups:
+  title: librarymashups
+  user: bob
   status: 0

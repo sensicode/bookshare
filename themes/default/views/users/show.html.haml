@@ -1,6 +1,50 @@
-%h1 My Account
+%p= link_to "<-- All users", :controller => :admin, :action => :users
+
+%h1= @user.login
 
 = image_tag @user.gravatar_image_url(80)
 
 %p
-  = pluralize(@user.books.count, "book")
+  = link_to "Send a message to #{@user.login}", { :controller => :messages, :action => :new, :recipient => @user.login }
+
+%p
+  = link_to(pluralize(@user.books.count, "book"), "/members/#{@user.login}")
+  
+%h2 Bans
+
+- unless @user.banned?
+  %p
+    = link_to "Ban #{@user.login}", new_ban_path(:login => @user.login)
+
+- if @user.bans.count > 0
+
+  %table
+
+    %tr
+      %th Banned at
+      %th Banned by
+      %th Reason
+      %th Unbanned at
+      %th Unbanned by
+      %th &nbsp;
+      
+    - for ban in @user.bans
+      %tr
+        %td= nice_date ban.created_at
+        %td= link_to(ban.banner.login, "/members/#{ban.banner.login}")
+        %td= simple_format(ban.reason)
+        - if ban.unbanned_at.nil?
+          %td &nbsp;
+          %td &nbsp;
+        - else
+          %td= nice_date ban.unbanned_at
+          %td= link_to(ban.unbanner.login, "/members/#{ban.unbanner.login}")
+        - if ban.unbanned_at.nil?
+          %td
+            - form_for @user, :url => unban_user_path(@user.id) do |f|
+              = f.error_messages
+              = f.submit "Unban" 
+
+- else
+
+  %p This user has never been banned.

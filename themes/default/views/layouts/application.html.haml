@@ -51,9 +51,9 @@
         = link_to_unless_current "Borrowed (#{current_user.active_borrowings.count.to_s})", :borrowings, :accesskey => '4'
         &nbsp;&nbsp;
         = link_to_unless_current "Watch List (#{current_user.watched_books.count.to_s})", :watchlist, :accesskey => '5'
-        -#
-          &nbsp;&nbsp;
-          = link_to_unless_current "My Account", :account, :accesskey => '6'
+        &nbsp;&nbsp;
+        - if is_admin?
+          = link_to_unless_current "Administration", :controller => :admin
         &nbsp;&nbsp;
         = link_to_unless_current "Log Out", :logout, :method => :delete, :confirm => "Are you sure you want to logout?"
       - else
