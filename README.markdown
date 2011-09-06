@@ -41,13 +41,13 @@ Fork the main project repository into your own account by clicking the **Fork** 
 
 Clone your new git repository to your local machine:
 
-	$ git clone git://github.com/your-username/nesta-bookshare.git casterbridgebookshare
+    $ git clone git://github.com/your-username/nesta-bookshare.git casterbridgebookshare
 
 ---
 
 Move into your Bookshare folder:
 
-	$ cd casterbridgebookshare
+    $ cd casterbridgebookshare
 
 ---
 
@@ -55,45 +55,47 @@ Make a copy of the default theme to use for your own site.
 
 **Do not edit the default theme itself as it'll get overwritten when you next pull down a copy of the latest Bookshare version.**
 
-	$ cp -r themes/default/ themes/casterbridge/
+    $ cp -r themes/default/ themes/casterbridge/
 
 ---
 
-Make a copy of the sample configuration file:
+Add your theme to your git repository:
 
-	$ cp config/config-sample.yml config/config.yml
-
----
-
-Open `config/config.yml` in your text editor and fill in your details. You can change these at any time in future.
-
-It might look something like this:
-
-	sitename: Casterbridge Bookshare
-	theme: casterbridge
-	email: mike.henchard@casterbridge.gov.uk
-	noreply_email: noreply@casterbridge.gov.uk
-	twitter: casterbridgebookshare
-	google_analytics: UA-XXXXX-X
-
-_sitename_ is the human-readable name of your site
-
-_theme_ is the name of your theme's folder within `/themes`
-
-_email_ is your main public contact email address
-
-_noreply\_email_ is used as the sender address on some outbound email messages. Use a noreply address at your domain if you've got one or your main contact address if you're happy to receive replies to these.
-
-_twitter_ is the name of the Twitter account for your Bookshare project. Don't include the @ sign at the beginning.  Leave this out if you don't have a Twitter account for your Bookshare.
-
-_google\_analytics_ is the web property ID (starts with "UA") for your site on [Google Analytics](http://www.google.com/intl/en/analytics/). If you're not using Analytics to track your web statistics just leave this blank.
+    $ git add themes/casterbridge
 
 ---
 
-Add and commit the `config.yml` file to your local git repository:
+If you're hosting on [Heroku](http://heroku.com/), set up your [configuration variables](http://devcenter.heroku.com/articles/config-vars) like this:
 
-	$ git add config/config.yml
-	$ git commit config/config.yml -m "Added my details"
+    $ heroku config:add BOOKSHARE_SITENAME="Casterbridge Bookshare"
+    $ heroku config:add BOOKSHARE_THEME=casterbridge
+    $ heroku config:add BOOKSHARE_EMAIL=mike.henchard@casterbridge.gov.uk
+    $ heroku config:add BOOKSHARE_NO_REPLY_EMAIL=noreply@casterbridge.gov.uk
+    $ heroku config:add BOOKSHARE_TWITTER=casterbridgebookshare
+    $ heroku config:add BOOKSHARE_GOOGLE_ANALYTICS=UA-XXXXX-X
+
+---
+
+If you're not hosting on Heroku (or if you want to run a local server, set up your configuration as environment variables. It might look something like this:
+
+    $ export BOOKSHARE_SITENAME="Casterbridge Bookshare"
+    $ export BOOKSHARE_THEME=casterbridge
+    $ export BOOKSHARE_EMAIL=mike.henchard@casterbridge.gov.uk
+    $ export BOOKSHARE_NO_REPLY_EMAIL=noreply@casterbridge.gov.uk
+    $ export BOOKSHARE_TWITTER=casterbridgebookshare
+    $ export BOOKSHARE_GOOGLE_ANALYTICS=UA-XXXXX-X
+
+BOOKSHARE\_SITENAME is the human-readable name of your site
+
+BOOKSHARE\_THEME is the name of your theme's folder within `/themes`
+
+BOOKSHARE\_EMAIL is your main public contact email address
+
+BOOKSHARE\_NO\_REPLY\_EMAIL is used as the sender address on some outbound email messages. Use a noreply address at your domain if you've got one or your main contact address if you're happy to receive replies to these.
+
+BOOKSHARE\_TWITTER is the name of the Twitter account for your Bookshare project. Don't include the @ sign at the beginning.  Leave this out if you don't have a Twitter account for your Bookshare.
+
+BOOKSHARE\_GOOGLE\_ANALYTICS is the web property ID (starts with "UA") for your site on [Google Analytics](http://www.google.com/intl/en/analytics/). If you're not using Analytics to track your web statistics just leave this blank.
 
 ---
 
@@ -103,7 +105,17 @@ Put your database details in `config/database.yml`
 
 Build the database:
 
-	$ rake db:migrate
+    $ rake db:migrate
+
+---
+
+Check that all the tests run OK:
+
+    $ rake
+
+---
+
+Register as the first user on your new site. You'll automatically be made a site administrator. You can promote other users to be administrators in the Administration section.
 
 ---
 
