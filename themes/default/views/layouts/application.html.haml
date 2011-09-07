@@ -36,7 +36,7 @@
       = CONFIG[:sitename]
       
     #userbar
-      = link_to_unless_current "Home", { :controller => 'pages', :action => 'home' }, :accesskey => '1'
+      = link_to_unless_current "Home", root_path, :accesskey => '1'
       &nbsp;&nbsp;
       - if current_user
         = image_tag current_user.gravatar_image_url(25), :alt => current_user.login
