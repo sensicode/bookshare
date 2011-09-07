@@ -19,9 +19,9 @@
       %a{ :href => '#main', :accesskey => 's' }<
         Skip to Content
       &nbsp;&nbsp;
-      =link_to_unless_current "Accessibility", accessibility_path, :accesskey => '0'
+      =link_to_unless_current "Accessibility", :accessibility, :accesskey => '0'
       &nbsp;&nbsp;
-      =link_to_unless_current "Contact Us", contact_path, :accesskey => '9'
+      =link_to_unless_current "Contact Us", :contact, :accesskey => '9'
         
     #search
       - form_tag(search_path, :method => :get) do
@@ -33,7 +33,7 @@
       = CONFIG[:sitename]
       
     #userbar
-      = link_to_unless_current "Home", root_path, :accesskey => '1'
+      = link_to_unless_current "Home", :root, :accesskey => '1'
       &nbsp;&nbsp;
       - if current_user
         = image_tag current_user.gravatar_image_url(25), :alt => current_user.login
