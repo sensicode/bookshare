@@ -1,5 +1,7 @@
 class MemberMessage < ActionMailer::Base
   
+  default :theme => CONFIG[:theme]
+
   def member_message(sender, recipient, message)
     @message = message
     @sender = sender
@@ -7,7 +9,7 @@ class MemberMessage < ActionMailer::Base
     mail(
       :to => recipient.email,
       :from => sender.email,
-      :subject => "Message from Sutton Bookshare member #{@sender.login}"
+      :subject => "Message from #{CONFIG[:sitename]} member #{@sender.login}"
     ) do |format|
       format.html
 #       format.text
@@ -22,19 +24,20 @@ class MemberMessage < ActionMailer::Base
     mail(
       :to => recipient.email,
       :from => sender.email,
-      :subject => "Book request for \"#{@book.title.title}\" from Sutton Bookshare member #{@sender.login}"
+      :subject => "Book request for \"#{@book.title.title}\" from #{CONFIG[:sitename]} member #{@sender.login}"
     ) do |format|
       format.html
 #       format.text
     end
   end
-  
+
+  # FIXME
   def registration_confirmation(recipient)
     @recipient = recipient
     mail(
       :to => recipient.email,
-      :from => "noreply@sutton.gov.uk",
-      :subject => "Welcome to Sutton Bookshare"
+      :from => CONFIG[:noreply_email] || CONFIG[:email], 
+      :subject => "Welcome to #{CONFIG[:sitename]}"
     ) do |format|
       format.html
 #       format.text
@@ -47,7 +50,7 @@ class MemberMessage < ActionMailer::Base
     mail(
       :to => user.email,
       :from => "noreply@sutton.gov.uk",
-      :subject => "Sutton Bookshare password reset instructions"
+      :subject => "#{CONFIG[:sitename]} password reset instructions"
     ) do |format|
       format.html
       format.text

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110323151412) do
+ActiveRecord::Schema.define(:version => 20110830202726) do
 
   create_table "authors", :force => true do |t|
     t.string   "name",       :default => ""
@@ -25,6 +25,16 @@ ActiveRecord::Schema.define(:version => 20110323151412) do
 
   add_index "authors_titles", ["author_id"], :name => "index_authors_titles_on_author_id"
   add_index "authors_titles", ["title_id"], :name => "index_authors_titles_on_title_id"
+
+  create_table "bans", :force => true do |t|
+    t.datetime "unbanned_at"
+    t.integer  "user_id"
+    t.integer  "banner"
+    t.text     "reason"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "unbanner"
+  end
 
   create_table "books", :force => true do |t|
     t.integer  "title_id"
@@ -70,15 +80,15 @@ ActiveRecord::Schema.define(:version => 20110323151412) do
   create_table "users", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "login",               :default => "", :null => false
-    t.string   "email",               :default => "", :null => false
-    t.string   "crypted_password",    :default => "", :null => false
-    t.string   "password_salt",       :default => "", :null => false
-    t.string   "persistence_token",   :default => "", :null => false
-    t.string   "single_access_token", :default => "", :null => false
-    t.string   "perishable_token",    :default => "", :null => false
-    t.integer  "login_count",         :default => 0,  :null => false
-    t.integer  "failed_login_count",  :default => 0,  :null => false
+    t.string   "login",               :default => "",     :null => false
+    t.string   "email",               :default => "",     :null => false
+    t.string   "crypted_password",    :default => "",     :null => false
+    t.string   "password_salt",       :default => "",     :null => false
+    t.string   "persistence_token",   :default => "",     :null => false
+    t.string   "single_access_token", :default => "",     :null => false
+    t.string   "perishable_token",    :default => "",     :null => false
+    t.integer  "login_count",         :default => 0,      :null => false
+    t.integer  "failed_login_count",  :default => 0,      :null => false
     t.datetime "last_request_at"
     t.datetime "current_login_at"
     t.datetime "last_login_at"
@@ -92,6 +102,8 @@ ActiveRecord::Schema.define(:version => 20110323151412) do
     t.string   "county"
     t.string   "postcode"
     t.string   "phone"
+    t.string   "status",              :default => "user"
+    t.boolean  "banned",              :default => false
   end
 
   create_table "watchings", :force => true do |t|

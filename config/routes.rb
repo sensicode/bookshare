@@ -1,12 +1,25 @@
-SuttonOpenLibrary::Application.routes.draw do
-  resources :books
+NestaBookshare::Application.routes.draw do
+
+  themes_for_rails
+  
   resources :authors
+  resources :bans
+  resources :books
+  resources :loans
   resources :subjects
   resources :titles
   resources :watchings
-  resources :users
   
   resource :account, :controller => :users
+    
+  resources :users do
+    member do
+      put :promote
+      put :demote
+      put :unban
+    end
+  end
+  
   root :to => 'pages#home'
   
   resources :user_sessions
@@ -20,7 +33,6 @@ SuttonOpenLibrary::Application.routes.draw do
   match 'lent' => 'users#loans', :as => :lent
   match 'borrowed' => 'users#borrowings', :as => :borrowings
   match 'search' => 'search#index', :as => :search
-  resources :loans
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

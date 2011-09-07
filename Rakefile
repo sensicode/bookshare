@@ -4,4 +4,4 @@
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
-SuttonOpenLibrary::Application.load_tasks
+NestaBookshare::Application.load_tasks

@@ -26,12 +26,25 @@ class User < ActiveRecord::Base
             :foreign_key => :lender_id,
             :conditions => { :returned => nil },
             :order => 'created_at DESC'
+  
+  has_many  :bans            
+  
+  has_many  :bannings,
+            :class_name => "Ban",
+            :foreign_key => :banner
             
+  has_many  :unbannings,
+            :class_name => "Ban",
+            :foreign_key => :unbanner
             
   validates_presence_of :first_name, :last_name, :address1, :city, :postcode
   
-  after_create :send_registration_confirmation
+  after_create :send_registration_confirmation, :promote_first_user
   
+#   attr_protected :status, :banned
+
+  attr_accessible :login, :email, :first_name, :last_name, :address1, :address2, :city, :county, :postcode, :phone, :password, :password_confirmation
+    
   def to_param
     login
   end
@@ -56,6 +69,26 @@ class User < ActiveRecord::Base
     "#{self.first_name} #{self.last_name}"
   end
   
+  def promote
+    update_attribute(:status, 'admin')
+  end
+  
+  def demote
+    update_attribute(:status, 'user')
+  end
+
+  def self.admins
+    User.find_all_by_status('admin', :order => :login)
+  end
+
+  def self.banned
+    User.find_all_by_banned_and_status(true, 'user', :order => :login) # It's implicit that status will be 'user' as admins can't be banned
+  end
+
+  def self.non_admins
+    User.find_all_by_banned_and_status(false, 'user', :order => :login)
+  end
+  
   def owns?(book)
     self.books.include?(book)
   end
@@ -66,8 +99,43 @@ class User < ActiveRecord::Base
     self.watched_books.include?(book)
   end
   
+  def admin?
+    self.status == 'admin'
+  end
+  
+  def unban(unbanner)
+    unless self.banned?
+      return false
+    end
+  
+    unless unbanner.admin?
+      return false
+    end
+    
+    @ban = self.bans.last
+    @ban.unbanner = unbanner
+    @ban.unbanned_at = Time.now
+
+    if @ban.save
+      self.banned = false
+      self.save
+      return true
+    else
+      return false
+    end
+  end
+  
+  protected
+  
   def send_registration_confirmation
     email = MemberMessage.registration_confirmation(self)
     email.deliver
+  end
+  
+  # When setting up a new site make the first registered user an admin
+  def promote_first_user
+    if 1 == User.count
+      User.first.promote
+    end
   end
 end

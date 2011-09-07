@@ -7,4 +7,8 @@ module ApplicationHelper
   def set_focus_to_id(id)
     javascript_tag("$('#{id}').focus();")
   end
+  
+  def is_admin?
+    current_user && current_user.status == 'admin'
+  end
 end

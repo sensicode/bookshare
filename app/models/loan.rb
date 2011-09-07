@@ -13,6 +13,8 @@ class Loan < ActiveRecord::Base
 
   validate :borrower_cant_be_lender
   validate :lender_must_own_book
+
+  before_create :book_must_be_available
   
   after_create :set_book_status_to_on_loan
               
@@ -31,6 +33,10 @@ class Loan < ActiveRecord::Base
   
   protected
   
+  def book_must_be_available
+    book.available?
+  end
+  
   def set_book_status_to_on_loan
     book.update_attribute :status, StaticData::BOOK_STATUS['ONLOAN']
   end
@@ -40,7 +46,11 @@ class Loan < ActiveRecord::Base
   end
   
   def lender_must_own_book
-    errors.add(:lender, "you must own the book you want to lend") unless book.user == lender
+    unless book.nil?
+      errors.add(:lender, "you must own the book you want to lend") unless book.user == lender
+    else
+      false
+    end
   end
   
 end

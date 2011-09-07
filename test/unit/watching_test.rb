@@ -3,8 +3,18 @@ require 'test_helper'
 class WatchingTest < ActiveSupport::TestCase
   def setup
     @thebridge = books(:thebridge) # belongs to alice
-    @outliers = books(:outliers) # belongs to bob
+    @outliers = books(:outliers) # belongs to bob, on loan
+    @middlemarch = books(:middlemarch) # belongs to bob, status: deleted
+    @plainspace = books(:plainspace) # belongs to bob, status: lost
+    @librarymashups = books(:librarymashups) # belongs to bob, status: available
     @alice = users(:alice)
+  end
+  
+  test "watch another users book" do
+    @watching = Watching.new
+    @watching.user = @alice
+    @watching.book = @outliers
+    assert @watching.save
   end
 
   test "can't watch your own book" do
@@ -34,7 +44,30 @@ class WatchingTest < ActiveSupport::TestCase
   end
   
   test "can only watch available or onloan books" do
-    flunk
+    # available book
+    @watching = Watching.new
+    @watching.user = @alice
+    @watching.book = @librarymashups
+    assert @watching.save
+
+    # on loan book
+    @watching = Watching.new
+    @watching.user = @alice
+    @watching.book = @outliers
+    assert @watching.save
+
+    # deleted book
+    @watching = Watching.new
+    @watching.user = @alice
+    @watching.book = @middlemarch
+    assert !@watching.save
+
+    # lost book
+    @watching = Watching.new
+    @watching.user = @alice
+    @watching.book = @plainspace
+    assert !@watching.save
+    
   end
   
 end

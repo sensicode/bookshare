@@ -1,7 +1,10 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
-  filter_parameter_logging :password, :password_confirmation
+  unless CONFIG[:theme].nil?
+    theme CONFIG[:theme]
+  end
+  
   helper_method :current_user_session, :current_user
 
   private
@@ -33,8 +36,17 @@ class ApplicationController < ActionController::Base
       end
     end
     
+    def require_admin
+      unless current_user && current_user.status == 'admin'
+        store_location
+        flash[:notice] = "You must be an administrator access this page"
+        redirect_to root_url
+        return false
+      end
+    end
+    
     def store_location
-      session[:return_to] = request.request_uri
+      session[:return_to] = request.fullpath
     end
     
     def redirect_back_or_default(default)

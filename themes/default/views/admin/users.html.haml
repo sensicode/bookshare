@@ -1,0 +1,67 @@
+%h1 Users
+
+#admins
+  %h2 Administrators
+  
+  - if @admins.count > 0
+  
+    %table
+      - for user in @admins
+        %tr
+          %td
+            = link_to(user.login, user_path(user.id))
+          %td
+            = user.status
+          %td
+            - form_for user, :method => 'post', :url => demote_user_path(:id => user.login) do |f|
+              = f.error_messages
+              = f.submit "Demote"
+  - else
+  
+    %p.warning There are no administrators on this site. Something is wrong! (Like, you shouldn't be able to see this page for a start.)
+
+        
+#banned        
+  %h2 Banned Users
+  
+  - if @banned.count > 0
+  
+    %table
+      - for user in @banned
+        %tr
+          %td
+            = link_to(user.login,  user_path(user.id))
+          %td
+            = user.status
+          %td
+            - form_for user, :url => unban_user_path(user.id) do |f|
+              = f.error_messages
+              = f.submit "Unban"        
+  
+  - else
+  
+    %p No users are banned.
+  
+  
+#non_admins        
+  %h2 Non-Administrators
+  
+  - if @non_admins.count > 0
+    
+    %table
+      - for user in @non_admins
+        %tr
+          %td
+            = link_to(user.login, user_path(user.id))
+          %td
+            = user.status
+          %td
+            = link_to "Ban", new_ban_path(:login => user.login)
+          %td
+            - form_for user, :method => 'post', :url => promote_user_path(:id => user.login) do |f|
+              = f.error_messages
+              = f.submit "Promote"
+              
+  - else
+  
+    %p There are no other users.

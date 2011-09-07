@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  unbanned_at: 2011-08-25 16:34:42
+  user_id: 1
+  reason: MyText
+
+two:
+  unbanned_at: 2011-08-25 16:34:42
+  user_id: 1
+  reason: MyText
