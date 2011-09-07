@@ -34,6 +34,11 @@ NestaBookshare::Application.routes.draw do
   match 'borrowed' => 'users#borrowings', :as => :borrowings
   match 'search' => 'search#index', :as => :search
   
+  # Static pages
+  match 'accessibility' => 'pages#accessibility', :as => :accessibility
+  match 'contact' => 'pages#contact', :as => :contact
+  
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
