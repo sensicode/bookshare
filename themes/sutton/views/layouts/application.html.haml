@@ -1,7 +1,7 @@
 !!!5
 %html
   %head
-    %title= @page_title.nil? ? CONFIG[:sitename] : @page_title + " - " + CONFIG[:sitename]
+    %title= @page_title.nil? ? ENV['BOOKSHARE_SITENAME'] : @page_title + " - " + ENV['BOOKSHARE_SITENAME']
     %link{ :rel => 'shortcut icon', :href => theme_image_path('favicon.ico'), :type => 'image/x-icon' }
     %link{ :rel => 'apple-touch-icon', :href => theme_image_path('apple-touch-icon.png')  }
     = theme_stylesheet_link_tag :style
@@ -93,7 +93,7 @@
     - unless CONFIG[:google_analytics].nil?
       :javascript
         var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', '#{CONFIG[:google_analytics]}']);
+        _gaq.push(['_setAccount', '#{ENV["BOOKSHARE_GOOGLE_ANALYTICS"]}']);
         _gaq.push(['_trackPageview']);
       
         (function() {
