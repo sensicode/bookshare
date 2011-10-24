@@ -1,0 +1,48 @@
+%h1
+  = link_to image_tag(@user.gravatar_image_url(75)), '/members/' + @user.login
+  Ban
+  = @user.name
+  (
+  = @user.login
+  )
+
+
+%p Banning is a temporary measure to suspend someone's account while you sort out a problem.
+
+%p Banned members can:
+
+%ul
+  %li check in books that people have lent to them
+  %li have other members check in books they've borrowed from them
+  %li login and logout
+
+%p but they can't:
+
+%ul
+  %li add or delete books
+  %li borrow or lend books
+  %li watch or unwatch books
+
+%p While a member is banned none of their books will show in the catalogue.
+
+%p Ban periods are not set in advance. Any administrator can unban a user at any time.
+
+= form_for(@ban) do |f|
+  = f.hidden_field :login, :value => @user.login
+
+  - if @ban.errors.any? 
+    .error_explanation
+      %h2
+        = pluralize(@ban.errors.count, "error")
+        prohibited this ban from being saved:
+
+      %ul
+        - @ban.errors.full_messages.each do |msg| 
+          %li= msg
+
+  .field
+    = f.label :reason, "Why are you banning this member?"
+    %br
+    = f.text_area :reason, :rows => 10, :cols => 50
+  .actions
+    = f.submit :value => "Ban #{@user.name} (#{@user.login})"

@@ -49,6 +49,9 @@
         &nbsp;&nbsp;
         = link_to_unless_current "Watch List (#{current_user.watched_books.count.to_s})", :watchlist, :accesskey => '5'
         &nbsp;&nbsp;
+        - if is_admin?
+          = link_to_unless_current "Administration", :controller => :admin
+        &nbsp;&nbsp;
         = link_to_unless_current "Log Out", :logout, :method => :delete, :confirm => "Are you sure you want to logout?"
       - else
         = link_to_unless_current "Register", :register
