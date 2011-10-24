@@ -36,6 +36,13 @@ td
   margin: 5px 0;
 }
 
+.book_grid td {
+  border: 0;
+  padding: 15px 20px 15px 0;
+  margin: 5px 0;
+  background-color: #fff;
+}
+
 th
 {
   text-align: left;
