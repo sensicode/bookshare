@@ -1,5 +1,5 @@
 class Title < ActiveRecord::Base
-  belongs_to :subject
+  has_and_belongs_to_many :subjects
   has_and_belongs_to_many :authors
   has_many :books
   
@@ -68,15 +68,12 @@ class Title < ActiveRecord::Base
         t.authors << Author.create(:name => author.text)
       end
     end
-    
 
-    subject = doc.xpath('//dc:subject').text
-
-    unless subject.nil?
-      if s = Subject.find_by_name(subject)
-        t.subject = s
+    doc.xpath('//dc:subject').each do |subject|
+      if s = Subject.find_by_name(subject.text)
+        t.subjects << s
       else
-        t.subject = Subject.create(:name => subject)
+        t.subjects << Subject.create(:name => subject.text)
       end
     end
 
@@ -85,5 +82,25 @@ class Title < ActiveRecord::Base
     t.save
     
     t
+  end
+  
+  # Use this to re-pull subjects data from the API when moving from old subjects system (one subject per title) to new (many subjects per title)
+  def update_subjects
+  
+    return if subjects.count > 0
+  
+    start_uri = 'http://books.google.com/books/feeds/volumes?q=' + isbn13
+    doc = Nokogiri::XML(open(start_uri))
+    
+    doc.xpath('//dc:subject').each do |subject|
+      if s = Subject.find_by_name(subject.text)
+        subjects << s
+      else
+        subjects << Subject.create(:name => subject.text)
+      end
+    end
+    
+    puts subjects.first.name
+    
   end
 end

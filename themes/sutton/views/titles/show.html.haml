@@ -16,9 +16,9 @@
   -# Google Book Search data contains HTML entities so use raw() to preserve them
   %div= raw @title.description
   
-  - unless @title.subject.nil?  
+  - @title.subjects.each do |subject|
     %p
-      = link_to @title.subject.name, subject_path(@title.subject)
+      = link_to subject.name, subject_path(subject)
   
   %p
     Search for this book at 
