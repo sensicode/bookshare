@@ -13,7 +13,7 @@
     - for title in @titles
       %tr
         %td
-          = link_to image_tag(title.image_url), title_path(title)
+          = link_to image_tag(title.image_url, :alt => title.title_and_author), title_path(title)
         %td
           %span{ :class => "book_list_title" }
             = link_to title.title, title_path(title)
