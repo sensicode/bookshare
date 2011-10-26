@@ -98,9 +98,7 @@ class Title < ActiveRecord::Base
       else
         subjects << Subject.create(:name => subject.text)
       end
+      puts subject.text
     end
-    
-    puts subjects.first.name
-    
   end
 end
