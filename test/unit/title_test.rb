@@ -7,6 +7,6 @@ class TitleTest < ActiveSupport::TestCase
 
   test "the bridge" do
     assert_equal "The Bridge", @title.title
-    assert_equal "History", @title.subject.name
+    assert_equal "History", @title.subjects.first.name
   end
 end
