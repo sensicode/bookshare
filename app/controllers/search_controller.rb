@@ -4,17 +4,13 @@ class SearchController < ApplicationController
 
 
     case ActiveRecord::Base.connection.adapter_name
-    when 'SQLite'
-      @titles = Title.find_by_sql(["
-        SELECT *
-        FROM titles
-        WHERE title LIKE ? OR subtitle LIKE ?", "%#{@q}%", "%#{@q}%"])
-    else
-      @titles = Title.find_by_sql(["
-        SELECT *
-        FROM titles
-        WHERE LOWER(TEXTCAT(TEXTCAT(title, ' '), subtitle)) LIKE(?)", "%#{@q}%"
-      ])
+      when 'SQLite'
+        @titles = Title.find_by_sql(["
+          SELECT *
+          FROM titles
+          WHERE title LIKE ? OR subtitle LIKE ?", "%#{@q}%", "%#{@q}%"])
+      else
+        @titles = Title.search(@q)
     end
 #     @type = params[:type]
 #     if @type == 'titles'

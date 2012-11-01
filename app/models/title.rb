@@ -9,6 +9,12 @@ class Title < ActiveRecord::Base
   validates_associated :authors
   validates_isbn :isbn13, :with => :isbn13
   
+  index do
+    title
+    subtitle
+    description
+  end
+  
   def to_param
     isbn13
   end

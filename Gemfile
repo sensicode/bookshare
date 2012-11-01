@@ -10,6 +10,8 @@ gem 'isbn'
 gem 'themes_for_rails'
 gem 'httpclient'
 gem 'json_pure'
+gem 'pg'
+gem 'texticle', '< 2.0'#, :require => 'texticle/rails'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
