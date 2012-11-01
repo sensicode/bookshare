@@ -78,7 +78,6 @@ ActiveRecord::Schema.define(:version => 20111024165639) do
     t.string   "subtitle"
     t.text     "description"
     t.string   "image_url"
-    t.integer  "subject_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

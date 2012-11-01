@@ -8,6 +8,8 @@ gem 'nokogiri'
 gem 'cuecat'
 gem 'isbn'
 gem 'themes_for_rails'
+gem 'httpclient'
+gem 'json_pure'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

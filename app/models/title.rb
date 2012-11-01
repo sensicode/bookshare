@@ -1,3 +1,5 @@
+require 'json/pure'
+
 class Title < ActiveRecord::Base
   has_and_belongs_to_many :subjects
   has_and_belongs_to_many :authors
@@ -5,7 +7,6 @@ class Title < ActiveRecord::Base
   
   validates_length_of :title, :minimum => 1
   validates_associated :authors
-#   validates_associated :subject
   validates_isbn :isbn13, :with => :isbn13
   
   def to_param
@@ -36,69 +37,57 @@ class Title < ActiveRecord::Base
     unless t2.nil?
       return t2
     end
-    
 
     # Look up in Google Books API
-    
-    start_uri = 'http://books.google.com/books/feeds/volumes?q=' + isbn13
-    doc = Nokogiri::XML(open(start_uri))
-    
     t = Title.new
     
-    unless doc.xpath('//dc:title')[0].nil?
-      t.title = doc.xpath('//dc:title')[0].text
+    url = "https://www.googleapis.com/books/v1/volumes/?q=%s" % isbn13
+    http = HTTPClient.new
+    res = http.get(url)
+    data = JSON.parse(res.body)
+
+    found_item = nil
+
+    # Loop through result set to find the item with our isbn13
+    data['items'].each do |item|
+      item['volumeInfo']['industryIdentifiers'].each do |isbn|
+        if isbn['type'] == "ISBN_13" && isbn['identifier'] == isbn13
+          found_item = item
+        end
+      end
+      break if found_item
     end
+
+    if found_item
+      t.title = found_item['volumeInfo']['title']
+      t.description = found_item['volumeInfo']['description']
+      t.image_url = found_item['volumeInfo']['imageLinks']['smallThumbnail']
+
+      unless found_item['volumeInfo']['authors'].nil?
+        found_item['volumeInfo']['authors'].each do |author|
+          if a = Author.find_by_name(author)
+            t.authors << a
+          else
+            t.authors << Author.create(:name => author)
+          end
+        end
+      end
         
-    unless doc.xpath('//dc:title')[1].nil?
-      t.subtitle = doc.xpath('//dc:title')[1].text
-    end
-    
-    unless doc.xpath('//dc:description').nil?
-      t.description = doc.xpath('//dc:description').text
-    end
-
-    unless doc.xpath('//atom:link[@rel="http://schemas.google.com/books/2008/thumbnail"]', 'atom' => 'http://www.w3.org/2005/Atom')[0]['href'].nil?
-      t.image_url = doc.xpath('//atom:link[@rel="http://schemas.google.com/books/2008/thumbnail"]', 'atom' => 'http://www.w3.org/2005/Atom')[0]['href']
-    end
-
-    doc.xpath('//dc:creator').each do |author|
-      if a = Author.find_by_name(author.text)
-        t.authors << a
-      else
-        t.authors << Author.create(:name => author.text)
+      unless found_item['volumeInfo']['categories'].nil?
+        found_item['volumeInfo']['categories'].each do |subject|
+          if s = Subject.find_by_name(subject)
+            t.subjects << s
+          else
+            t.subjects << Subject.create(:name => subject)
+          end
+        end
       end
-    end
-
-    doc.xpath('//dc:subject').each do |subject|
-      if s = Subject.find_by_name(subject.text)
-        t.subjects << s
-      else
-        t.subjects << Subject.create(:name => subject.text)
-      end
-    end
-
-    t.isbn13 = isbn13
-    
-    t.save
-    
-    t
-  end
-  
-  # Use this to re-pull subjects data from the API when moving from old subjects system (one subject per title) to new (many subjects per title)
-  def update_subjects
-  
-    return if subjects.count > 0
-  
-    start_uri = 'http://books.google.com/books/feeds/volumes?q=' + isbn13
-    doc = Nokogiri::XML(open(start_uri))
-    
-    doc.xpath('//dc:subject').each do |subject|
-      if s = Subject.find_by_name(subject.text)
-        subjects << s
-      else
-        subjects << Subject.create(:name => subject.text)
-      end
-      puts subject.text
+        
+      t.isbn13 = isbn13
+      t.save
+      return t
+    else
+      # We didn't find any item with this ISBN in the API
     end
   end
 end
