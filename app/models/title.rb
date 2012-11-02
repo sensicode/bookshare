@@ -96,4 +96,71 @@ class Title < ActiveRecord::Base
       # We didn't find any item with this ISBN in the API
     end
   end
+  
+  # Update all titles from Google Books API
+  def self.update
+    i = 0
+    j = Title.count
+    Title.all.each do |t|
+      i += 1
+      puts "#{t.isbn13} (#{i} of #{j})"
+      t.update_from_api!
+      sleep 3
+    end
+  end
+  
+  def update_from_api!
+    url = "https://www.googleapis.com/books/v1/volumes/?q=%s" % self.isbn13
+    http = HTTPClient.new
+    res = http.get(url)
+    data = JSON.parse(res.body)
+
+    found_item = nil
+
+    # Loop through result set to find the item with our isbn13
+    data['items'].each do |item|
+      item['volumeInfo']['industryIdentifiers'].each do |isbn|
+        if isbn['type'] == "ISBN_13" && isbn['identifier'] == isbn13
+          found_item = item
+        end
+      end
+      break if found_item
+    end
+
+    if found_item
+      self.title = found_item['volumeInfo']['title']
+      self.description = found_item['volumeInfo']['description']
+      self.image_url = found_item['volumeInfo']['imageLinks']['smallThumbnail']
+
+      # Authors
+      self.authors = [] # Remove existing authors
+
+      unless found_item['volumeInfo']['authors'].nil?
+        found_item['volumeInfo']['authors'].each do |author|
+          if a = Author.find_by_name(author)
+            self.authors << a
+          else
+            self.authors << Author.create(:name => author)
+          end
+        end
+      end
+        
+      # Subjects
+      self.subjects = [] # Remove existing subjects
+        
+      unless found_item['volumeInfo']['categories'].nil?
+        found_item['volumeInfo']['categories'].each do |subject|
+          if s = Subject.find_by_name(subject)
+            self.subjects << s
+          else
+            self.subjects << Subject.create(:name => subject)
+          end
+        end
+      end
+        
+      self.save
+    else
+      # We didn't find any item with this ISBN in the API
+    end
+  end
 end

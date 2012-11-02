@@ -43,3 +43,7 @@ task :sanity_check_titles_subjects => :environment do
   puts "Total titles: %d" % Title.count
   puts "Titles without subjects: %d" % titles_without_subjects
 end
+
+task :update_titles => :environment do
+  Title.update
+end
