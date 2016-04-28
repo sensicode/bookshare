@@ -1,0 +1,100 @@
+!!!5
+%html
+  /
+    NESTA Bookshare
+  %head
+    %title= @page_title.nil? ? CONFIG[:sitename] : @page_title + " - " + CONFIG[:sitename]
+    %link{ :rel => 'shortcut icon', :href => theme_image_path('favicon.ico'), :type => 'image/x-icon' }
+    %link{ :rel => 'apple-touch-icon', :href => theme_image_path('apple-touch-icon.png')  }
+    = theme_stylesheet_link_tag :reset
+    = theme_stylesheet_link_tag :style
+    = theme_javascript_include_tag 'prototype'
+    = theme_javascript_include_tag 'effects'
+    = theme_javascript_include_tag 'dragdrop'
+    = theme_javascript_include_tag 'controls'
+    = theme_javascript_include_tag 'rails'
+    = csrf_meta_tag
+    = yield :head
+
+  %body
+  
+    .access
+      %a{ :href => '#main', :accesskey => 's' }<
+        Skip to Content
+      &nbsp;&nbsp;
+      =link_to_unless_current "Accessibility", :accessibility, :accesskey => '0'
+      &nbsp;&nbsp;
+      =link_to_unless_current "Contact Us", :contact, :accesskey => '9'
+        
+    #search
+      - form_tag(search_path, :method => :get) do
+        = text_field_tag :q, '', { :size => 25, :class => 'bigfield' }
+        = submit_tag "Find Books", { :class => 'bigfield' }
+        
+    %h1.logo
+      = link_to(theme_image_tag('logo.png', :alt => "Logo"), :controller => 'pages', :action => 'home')
+      = CONFIG[:sitename]
+      
+    #userbar
+      = link_to_unless_current "Home", :root, :accesskey => '1'
+      &nbsp;&nbsp;
+      - if current_user
+        = image_tag current_user.gravatar_image_url(25), :alt => current_user.login
+        Logged in as
+        %strong
+          = link_to current_user.login, :controller => :members, :action => :show, :login => current_user.login
+        &nbsp;&nbsp;
+        = link_to_unless_current "My Books (#{current_user.books.count.to_s})", books_path, :accesskey => '2'
+        &nbsp;&nbsp;
+        = link_to_unless_current "Lent (#{current_user.active_loans.count.to_s})", :lent, :accesskey => '3'
+        &nbsp;&nbsp;
+        = link_to_unless_current "Borrowed (#{current_user.active_borrowings.count.to_s})", :borrowings, :accesskey => '4'
+        &nbsp;&nbsp;
+        = link_to_unless_current "Watch List (#{current_user.watched_books.count.to_s})", :watchlist, :accesskey => '5'
+        &nbsp;&nbsp;
+        - if is_admin?
+          = link_to_unless_current "Administration", :controller => :admin
+        &nbsp;&nbsp;
+        = link_to_unless_current "Log Out", :logout, :method => :delete, :confirm => "Are you sure you want to logout?"
+      - else
+        = link_to_unless_current "Register", :register
+        &nbsp;&nbsp;
+        = link_to_unless_current "Log In", :login
+    
+    #main
+      
+      - if flash.notice
+        .notice= flash.notice
+      - if flash.alert
+        .notice.alert= flash.alert
+  
+      = yield
+    
+    #footer
+      %a{ :href => "http://www.nesta.org.uk/" }<
+        Powered by NESTA Bookshare 
+      &nbsp;&nbsp;
+      %a{ :href => "http://www.sutton.gov.uk/" }<
+        Designed by the London Borough of Sutton
+      &nbsp;&nbsp;
+      %a{ :href => 'https://github.com/adrianshort/nesta-bookshare' }<
+        Open source code
+      &nbsp;&nbsp;
+      - unless CONFIG[:twitter].nil?
+        &nbsp;&nbsp;
+        = link_to theme_image_tag('twitter.png', :alt => "@#{CONFIG[:twitter]} on Twitter", :size => "16x16"), "http://twitter.com/#{CONFIG[:twitter]}"
+      &nbsp;&nbsp;
+      = link_to (theme_image_tag 'rss-mono.png', :alt => "Atom feed for new books", :size => "16x16"), titles_path(:format => :atom)
+
+
+    - unless CONFIG[:google_analytics].nil?
+      :javascript
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', '#{CONFIG[:google_analytics]}']);
+        _gaq.push(['_trackPageview']);
+      
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
